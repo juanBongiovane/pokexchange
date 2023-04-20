@@ -7,4 +7,4 @@ const pokemonSchema = new Schema({
     color: String
 });
 
-module.exports = mongoose.model('Pokemon', pokemonSchema);
+module.exports = mongoose.model('pokemons', pokemonSchema);
