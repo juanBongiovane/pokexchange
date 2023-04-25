@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../assets/styles/loginForm.css';
-import {Box, InputAdornment, TextField} from "@mui/material";
+import {Box, Grid, InputAdornment, TextField} from "@mui/material";
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 
 const LoginForm = () => {
@@ -14,13 +14,29 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="login-form-container">
-            <h1>Iniciar sesión</h1>
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <>
+            <Grid container xs display="flex" justifyContent="center" alignItems="center" sx={{height: "100%"}}>
+                <Grid item xs={12} container  justifyContent="center" alignItems="center" sx={{height: "50%"}} >
+                <h1>Iniciar Sesion</h1>
+                </Grid>
+                <Grid item xs={12} container  justifyContent="center" alignItems="center" sx={{height: "50%"}}>
+
                 <AccountBoxOutlinedIcon sx={{ color: '#558b2f', mr: 1, my: 0.5 }} />
-                <TextField id="input-with-sx" label="Username" variant="standard" color="secondary"/>
-            </Box>
-        </div>
+                <TextField
+                    id="outlined-basic"
+                    label="Username"
+                    variant="outlined"
+                    autoComplete="current-password"
+                />
+                <TextField
+                    id="outlined-password-input"
+                    label="Password"
+                    type="password"
+                    autoComplete="current-password"
+                />
+            </Grid>
+            </Grid>
+        </>
     );
 };
 
