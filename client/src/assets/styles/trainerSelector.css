@@ -1,0 +1,12 @@
+.trainer-crop {
+    display: flex;
+    align-items: center;
+}
+
+.trainer-image {
+    width: 65px;
+    height: 65px;
+    background-size: 256px 256px;
+    background-position: 0 0;
+    margin-right: 10px; /* Ajusta la separación entre la imagen y el texto del entrenador */
+}

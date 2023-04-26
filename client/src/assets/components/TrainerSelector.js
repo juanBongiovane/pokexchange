@@ -1,38 +1,53 @@
 import * as React from 'react';
-import {Box, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
-import {useState} from "react";
+import {IconButton} from "@mui/material";
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import {useEffect, useState} from "react";
+import { BASE_API_URL } from "../../constants/apiRoutes";
+import { getRandomIndex } from "../../utils/random";
 
-import trainersJson from '../data/trainer.json';
+import '../../assets/styles/trainerSelector.css';
+
+
 
 const TrainerSelector = () => {
-    const [selectedValue, setSelectedValue] = useState('');
 
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
+    const [trainers, _] = useState(require('../data/trainer.json'));
+
+    const [selectedTrainer, setSelectedTrainer] = useState(0);
+
+    useEffect(() => {
+        setSelectedTrainer(getRandomIndex(trainers));
+    }, []);
+
+    const handleChange = () => {
+        setSelectedTrainer(getRandomIndex(trainers));
     };
 
-    const trainers = require('../data/trainer.json');
-
-
     return (
-        <FormControl fullWidth>
-            <InputLabel id="trainer-select-label">Entrenador</InputLabel>
-            <Select
-                labelId="trainer-select-label"
-                id="trainer"
-                value={selectedValue}
-                label="Entrenador"
-                onChange={handleChange}
-            >
-                {trainers.map((trainer) => (
-                    <MenuItem key={trainer['id-trainer']} value={trainer['id-trainer']}>
-                        <a href={trainer.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            {trainer.trainer}
-                        </a>
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        <div>
+            <h1 id="trainer-select-label">Entrenador</h1>
+
+                    <div className="trainer-crop">
+                        <div
+                            className="trainer-image"
+                            style={{
+                                backgroundImage: `url("${BASE_API_URL}public/images/trainer/${trainers[selectedTrainer].name}.png")`,
+                            }}
+                        ></div>
+                        <p>{trainers[selectedTrainer].name}</p>
+                    </div>
+
+                <IconButton
+                    aria-label="delete"
+                    labelId="trainer-select-label"
+                    id="trainer"
+                    value={selectedTrainer}
+                    label="Entrenador"
+                    onClick={handleChange}>
+                    <AutorenewIcon />
+                </IconButton>
+
+       </div>
     );
 };
 
