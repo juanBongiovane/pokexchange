@@ -1,8 +1,8 @@
 import React from 'react';
-import LoginForm from "./LoginForm";
+import SignUpForm from "./signUpForm";
 import {Box, Container} from "@mui/material";
 
-function LoginPage() {
+function SignUp() {
     return (
         <Container maxWidth={false} sx={{ bgcolor: 'red', height: '100vh' }}>
             <Box sx={{ bgcolor: '#cfe8fc', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -14,10 +14,10 @@ function LoginPage() {
                     minWidth: '300px',
                     maxWidth: '100%',
                 }}>
-                    <LoginForm />
+                    <SignUpForm />
                 </Box>
             </Box>
         </Container>
     );
 }
-export default LoginPage;
+export default SignUp;

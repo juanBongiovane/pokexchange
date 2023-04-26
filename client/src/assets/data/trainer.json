@@ -1,0 +1,77 @@
+[
+  {
+    "id-trainer": 1,
+    "trainer": "Ethan",
+    "url": "../../assets/images/Ethan.png"
+  },
+  {
+    "id-trainer": 2,
+    "trainer": "Nolan",
+    "url": "../../assets/images/Nolan.png"
+  },
+  {
+    "id-trainer": 3,
+    "trainer": "Zoe",
+    "url": "../../assets/images/Zoe.png"
+  },
+  {
+    "id-trainer": 4,
+    "trainer": "Xavier",
+    "url": "../../assets/images/Xavier.png"
+  },
+  {
+    "id-trainer": 5,
+    "trainer": "Luna",
+    "url": "../../assets/images/Luna.png"
+  },
+  {
+    "id-trainer": 5,
+    "trainer": "Leo",
+    "url": "../../assets/images/Leo.png"
+  },
+  {
+    "id-trainer": 6,
+    "trainer": "Mia",
+    "url": "../../assets/images/Mia.png"
+  },
+  {
+  "id-trainer": 7,
+  "trainer": "Caleb",
+  "url": "../../assets/images/Caleb.png"
+  },
+  {
+    "id-trainer": 8,
+    "trainer": "Avery",
+    "url": "../../assets/images/Avery.png"
+  },
+  {
+    "id-trainer": 9,
+    "trainer": "Mason",
+    "url": "../../assets/images/Mason.png"
+  },
+  {
+    "id-trainer": 10,
+    "trainer": "Willow",
+    "url": "../../assets/images/Willow.png"
+  },
+  {
+    "id-trainer": 11,
+    "trainer": "Blake",
+    "url": "../../assets/images/Blake.png"
+  },
+  {
+    "id-trainer": 12,
+    "trainer": "Max",
+    "url": "../../assets/images/Max.png"
+  },
+  {
+    "id-trainer": 13,
+    "trainer": "Sophia",
+    "url": "../../assets/images/Sophia.png"
+  },
+  {
+    "id-trainer": 14,
+    "trainer": "Harper",
+    "url": "../../assets/images/Harper.png"
+  }
+]

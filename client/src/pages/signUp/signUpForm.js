@@ -1,12 +1,12 @@
 import '../../assets/styles/loginForm.css';
 
 import React, { useState } from 'react';
-import {Button, Grid, Link, TextField} from "@mui/material";
+import {Button, Grid, Link, Select, TextField} from "@mui/material";
 import PersonAddSharpIcon from '@mui/icons-material/PersonAddSharp';
-import LoginSharpIcon from '@mui/icons-material/LoginSharp';
+import TrainerSelector from '../../assets/components/TrainerSelector';
 
 
-const LoginForm = () => {
+const SignUpForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -26,7 +26,7 @@ const LoginForm = () => {
             sx={{ height: '100%' }}
         >
             <Grid item>
-                <h1>Iniciar Sesion</h1>
+                <h1>Nuevo usuario</h1>
             </Grid>
             <Grid item sx={{width: "100%"}}>
                 <TextField
@@ -55,16 +55,14 @@ const LoginForm = () => {
                     endIcon={<PersonAddSharpIcon />}
                     sx={{ marginRight: 2 }}
                 >
-                    Nuevo
+                    Crear
                 </Button>
-                <Button
-                    variant="contained"
-                    startIcon={<LoginSharpIcon />}>
-                    Entrar
-                </Button>
+            </Grid>
+            <Grid>
+                <TrainerSelector/>
             </Grid>
         </Grid>
     );
 };
 
-export default LoginForm;
+export default SignUpForm;
