@@ -1,13 +1,16 @@
 const express = require('express');
 const app = express();
+var cors = require('cors');
 process.env.NODE_CONFIG_DIR = process.cwd() + "/server/config";
 const config = require('config');
 const connectDB = require('./config/db');
 
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 var path = require('path');
 console.log(path.resolve('./server/public'));
@@ -17,6 +20,6 @@ app.use("/public", express.static(path.resolve('./server/public')));
 connectDB();
 
 // Rutas
-//app.use('/', require('./routes/index'));
+app.use('/', require('./routes/index'));
 
 module.exports = app;

@@ -4,7 +4,9 @@ import {Box, Container} from "@mui/material";
 
 function LoginPage() {
     return (
-        <Container maxWidth={false} sx={{ bgcolor: 'red', height: '100vh' }}>
+        <Container maxWidth={false}
+                   sx={{ bgcolor: 'red', height: '100vh' }}
+        >
             <Box sx={{ bgcolor: '#cfe8fc', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Box sx={{
                     border: '2px solid #000',

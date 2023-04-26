@@ -1,58 +1,58 @@
 [
   {
-    "id-trainer": 1,
+    "idTrainer": 1,
     "name": "Ethan"
   },
   {
-    "id-trainer": 2,
+    "idTrainer": 2,
     "name": "Nolan"
   },
   {
-    "id-trainer": 3,
+    "idTrainer": 3,
     "name": "Zoe"
   },
   {
-    "id-trainer": 4,
+    "idTrainer": 4,
     "name": "Xavier"
   },
   {
-    "id-trainer": 5,
+    "idTrainer": 5,
     "name": "Luna"
   },
   {
-    "id-trainer": 6,
+    "idTrainer": 6,
     "name": "Mia"
   },
   {
-  "id-trainer": 7,
+  "idTrainer": 7,
   "name": "Caleb"
   },
   {
-    "id-trainer": 8,
+    "idTrainer": 8,
     "name": "Avery"
   },
   {
-    "id-trainer": 9,
+    "idTrainer": 9,
     "name": "Mason"
   },
   {
-    "id-trainer": 10,
+    "idTrainer": 10,
     "name": "Willow"
   },
   {
-    "id-trainer": 11,
+    "idTrainer": 11,
     "name": "Blake"
   },
   {
-    "id-trainer": 12,
+    "idTrainer": 12,
     "name": "Max"
   },
   {
-    "id-trainer": 13,
+    "idTrainer": 13,
     "name": "Sophia"
   },
   {
-    "id-trainer": 14,
+    "idTrainer": 14,
     "name": "Leo"
   }
 ]

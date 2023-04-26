@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pokemonController = require('../controllers/pokemonController');
+const userController = require('../controllers/userController')
 
 // Ruta principal
 router.get('/', (req, res) => {
@@ -9,5 +10,8 @@ router.get('/', (req, res) => {
 
 router.post('/pokemon', pokemonController.createPokemon);
 router.get('/pokemons', pokemonController.getPokemons);
+
+router.post('/user', userController.createUser);
+router.get('/users', userController.getUser);
 
 module.exports = router;

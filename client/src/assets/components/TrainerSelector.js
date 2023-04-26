@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {IconButton} from "@mui/material";
-import AutorenewIcon from '@mui/icons-material/Autorenew';
+import {IconButton, InputLabel} from "@mui/material";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {useEffect, useState} from "react";
 import { BASE_API_URL } from "../../constants/apiRoutes";
 import { getRandomIndex } from "../../utils/random";
@@ -9,44 +10,58 @@ import '../../assets/styles/trainerSelector.css';
 
 
 
-const TrainerSelector = () => {
+const TrainerSelector = ({initialValue, onTrainerChange }) => {
 
     const [trainers, _] = useState(require('../data/trainer.json'));
 
-    const [selectedTrainer, setSelectedTrainer] = useState(0);
+    const [selectedTrainer, setSelectedTrainer] = useState(null);
 
     useEffect(() => {
-        setSelectedTrainer(getRandomIndex(trainers));
+        const rand = getRandomIndex(trainers);
+        setSelectedTrainer(rand);
+        onTrainerChange(trainers[rand].idTrainer);
     }, []);
 
-    const handleChange = () => {
-        setSelectedTrainer(getRandomIndex(trainers));
+    const handleChange = (direction) => {
+        //const newTrainerIndex = getRandomIndex(trainers);
+        let newTrainerIndex = selectedTrainer+direction;
+        if (newTrainerIndex < 0) newTrainerIndex = trainers.length-1;
+        if (newTrainerIndex === trainers.length) newTrainerIndex = 0;
+        setSelectedTrainer(newTrainerIndex);
+        onTrainerChange(trainers[newTrainerIndex].idTrainer);
     };
 
-    return (
-        <div>
-            <h1 id="trainer-select-label">Entrenador</h1>
+    return selectedTrainer == null ? (<></>) : (
+        <div className="trainer">
+            <InputLabel id="trainer-select-label">Elige a tu avatar</InputLabel>
+                <div className="trainer-crop">
+                    <IconButton
+                        aria-label="delete"
+                        id="trainer"
+                        value={selectedTrainer}
+                        label="Entrenador"
+                        onClick={handleChange.bind(null, -1)}>
+                        <ArrowBackIosIcon
+                        />
+                    </IconButton>
+                    <div
+                        className="trainer-image"
+                        style={{
+                            backgroundImage: `url("${BASE_API_URL}/public/images/trainer/${trainers[selectedTrainer].name}.png")`,
+                        }}
+                    ></div>
+                    <IconButton
+                        aria-label="delete"
+                        id="trainer"
+                        value={selectedTrainer}
+                        label="Entrenador"
+                        onClick={handleChange.bind(null, 1)}>
+                        <ArrowForwardIosIcon
+                        />
+                    </IconButton>
 
-                    <div className="trainer-crop">
-                        <div
-                            className="trainer-image"
-                            style={{
-                                backgroundImage: `url("${BASE_API_URL}public/images/trainer/${trainers[selectedTrainer].name}.png")`,
-                            }}
-                        ></div>
-                        <p>{trainers[selectedTrainer].name}</p>
-                    </div>
-
-                <IconButton
-                    aria-label="delete"
-                    labelId="trainer-select-label"
-                    id="trainer"
-                    value={selectedTrainer}
-                    label="Entrenador"
-                    onClick={handleChange}>
-                    <AutorenewIcon />
-                </IconButton>
-
+                    {/*<InputLabel>{trainers[selectedTrainer].name}</InputLabel>*/}
+                </div>
        </div>
     );
 };
