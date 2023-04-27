@@ -7,7 +7,16 @@ import AppBackground from "../../assets/components/AppBackground";
 function LoginPage() {
     return (
         <AppBackground>
-            <LoginForm />
+            <Box sx={{
+                borderRadius: '8px',
+                padding: '32px',
+                backgroundColor: '#fff',
+                minWidth: '300px',
+                maxWidth: '100%',
+                boxShadow: 3
+            }}>
+                <LoginForm />
+            </Box>
         </AppBackground>
     );
 }
