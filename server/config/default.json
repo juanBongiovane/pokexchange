@@ -1,6 +1,6 @@
 {
   "mongodb": {
-    "url": "mongodb+srv://juan:pokemon@pokemonxchage.kap5iy0.mongodb.net/?retryWrites=true&w=majority",
+    "url": "mongodb+srv://juan:B8LaEVe8r95grX5W@pokemonxchage.kap5iy0.mongodb.net/?retryWrites=true&w=majority",
     "options" : {
       "autoIndex": false,
       "maxPoolSize": 10,
