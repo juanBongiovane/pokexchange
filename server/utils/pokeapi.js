@@ -1,32 +1,29 @@
 const {POKE_API_URL_POKEMON}= require('../config/constants')
-const {response} = require("express");
-const {error} = require("server/router");
-const pokeApiFindPokemon = async function (name){
+function pokeApiFindPokemon(name) {
+
+    if (name === '' || name === undefined || name === null) {
+        console.error('El nombre no puede estar vacío');
+        throw new Error('El nombre no puede estar vacío');
+    }
+
     const url = POKE_API_URL_POKEMON + name;
 
-    return fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            console.error('Error al consultar la API:', error);
-        });
-    return json;
+    return fetch(url).then(response=> {
+        if (!response.ok) {
+            console.error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    });
 }
 
-const pokeApiEvolution = function (url){
-    return fetch(url)
-        .then((response)=>{
-            if(!response.ok){
-                throw  new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .catch((error) =>{
-            console.error('Error al consultar la API:', error);
+function pokeApiEvolution(url) {
+    return fetch(url).then(response=>{
+        if (!response.ok) {
+            console.error(`HTTP error! Status: ${response.status}`);
+            throw new Error (`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
     });
 }
 

@@ -14,11 +14,11 @@ const SignUpForm = () => {
         birthDate: '',
         email: '',
         password: '',
-        trainer: null
+        trainerAvatar: null
     });
 
     const handleTrainerChange = (trainerName) => {
-        setFormData({ ...formData, trainer: trainerName });
+        setFormData({ ...formData, trainerAvatar: trainerName });
     };
 
     const handleChange = (e) => {
@@ -92,8 +92,9 @@ const SignUpForm = () => {
                     sx={{ marginBottom: 3 }}
                     onChange={handleChange}
                 />
+                <TrainerSelector onTrainerChange={handleTrainerChange} />
             </FormControl>
-            <TrainerSelector onTrainerChange={handleTrainerChange} />
+
             <Button
                 variant="contained"
                 endIcon={<SaveOutlinedIcon />}

@@ -1,0 +1,38 @@
+.hud{
+    z-index: 1000;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    display: flex;
+    width: 200px;
+    border: solid 1px black;
+    background: white;
+    flex-direction: column;
+
+}
+.trainer-image {
+    width: 65px;
+    height: 65px;
+    background-size: 256px 256px;
+    background-position: 0 0;
+    margin: 0 10px;
+}
+.trainer-coin{
+    display: flex;
+    align-items: center;
+    border: solid 1px #61dafb;
+    border-radius: 20px;
+    background: #81d8f1;
+    margin: 10px;
+    padding: 5px;
+}
+.trainer-coin p {
+    margin: 0;
+    padding: 0 10px;
+    color: #e6a71e;
+    font-weight: 600;
+}
+.poke-coin{
+    padding-left: 10px;
+    width: 20px;
+}

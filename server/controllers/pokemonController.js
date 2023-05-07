@@ -1,51 +1,8 @@
-const Pokedex = require('../models/Pokedex');
-const { pokeApiFindPokemon, pokeApiEvolution } = require('../utils/pokeapi');
-const { savePokemon } = require('../utils/savePokemon');
-const findPokemon = function () {
-    return Pokedex.find({ name: "Slowpoke" });
-};
+const { findAndSavePokemon } = require('../utils/savePokemon');
 
-async function findAndSavePokemon() {
-    try {
-        const fPoke = await findPokemon();
-        if (!fPoke.length) {
-            const pokemon = await pokeApiFindPokemon('Slowpoke');
-            const evolution = await pokeApiEvolution(pokemon.evolution_chain.url);
-            console.log("Evolution", evolution.chain.evolves_to);
-            if (!evolution.chain.evolves_to.length) {
-                savePokemon(pokemon);
-            } else {
-                console.log("tiene evolucion");
-            }
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-// Llamada a la función
-findAndSavePokemon();
-
-/*findPokemon().then(fPoke => {
-    if (!fPoke.length) {
-        pokeApiFindPokemon('pikachu').then(pokemon => {
-            pokeApiEvolution(pokemon.evolution_chain.url).then(evolution => {
-                console.log("Evolution", evolution);
-                if(!evolution.length){
-                    savePokemon(pokemon)
-                }else {
-                    console.log("tiene evolucion")
-                }
-            })
-        })
-    }
-})*/
-
-const raichu = new Pokedex({_id: 26, name: "Raichu", color: "Amarillo", evolutions: []});
-
-// raichu.save();
-
-
+findAndSavePokemon('empoleon').catch((error) => {
+    console.error("Error en findAndSavePokemon:", error);
+});
 
 exports.createPokemon = async (req, res) => {
     try {

@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 
 let encryptionUtil = {
     encryptPassword: function(password, salt) {
-        var encryptedPassword;
+        let encryptedPassword;
         if (salt == null) {
             salt = bcrypt.genSaltSync();
         }
@@ -13,7 +13,7 @@ let encryptionUtil = {
         };
     },
     comparePassword: function(password, salt, encryptedPasswordToCompareTo) {
-        var encryptedPassword;
+        let encryptedPassword;
         encryptedPassword = this.encryptPassword(password, salt).encryptedPassword;
         return encryptedPassword === encryptedPasswordToCompareTo;
     }

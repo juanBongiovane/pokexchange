@@ -2,17 +2,18 @@ import * as React from 'react';
 import {IconButton, InputLabel} from "@mui/material";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import { BASE_API_URL } from "../../constants/apiRoutes";
 import { getRandomIndex } from "../../utils/random";
 
+import {TrainerContext} from "../../index";
 import '../../assets/styles/trainerSelector.css';
 
 
 
 const TrainerSelector = ({initialValue, onTrainerChange }) => {
 
-    const [trainers, _] = useState(require('../data/trainer.json'));
+    const trainers = useContext(TrainerContext);
 
     const [selectedTrainer, setSelectedTrainer] = useState(null);
 
@@ -33,10 +34,10 @@ const TrainerSelector = ({initialValue, onTrainerChange }) => {
 
     return selectedTrainer == null ? (<></>) : (
         <div className="trainer">
-            <InputLabel id="trainer-select-label">Elige a tu avatar</InputLabel>
+            <p id="trainer-select-label">Elige a tu avatar</p>
                 <div className="trainer-crop">
                     <IconButton
-                        aria-label="delete"
+                        aria-label="previus trtainer"
                         id="trainer"
                         value={selectedTrainer}
                         label="Entrenador"
@@ -51,7 +52,7 @@ const TrainerSelector = ({initialValue, onTrainerChange }) => {
                         }}
                     ></div>
                     <IconButton
-                        aria-label="delete"
+                        aria-label="next traienr"
                         id="trainer"
                         value={selectedTrainer}
                         label="Entrenador"

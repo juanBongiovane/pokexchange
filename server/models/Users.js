@@ -19,6 +19,7 @@ const userSchema = new Schema({
     },
     password: String,
     trainerAvatar: Number,
+    coin: 0,
     friends:  [{
         type: Schema.Types.ObjectId,
         ref: "Users"
