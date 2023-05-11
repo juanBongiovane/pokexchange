@@ -1,7 +1,7 @@
 const Pokedex = require("../models/Pokedex");
 const {pokeApiFindPokemon, pokeApiEvolution, pokeApiStats} = require("./pokeapi");
 const calculatePricePokemon = require("./calculatePricePokemon");
-const {IMG_POKEMON_PNG, IMG_POKEMON_PIXEL_PNG} = require("../config/constants");
+const {IMG_POKEMON_PNG, IMG_POKEMON_PIXEL_PNG, IMG_POKEMON_GIF} = require("../config/constants");
 
 function savePokemon (pokemon, stats, stages) {
 
@@ -17,8 +17,9 @@ function savePokemon (pokemon, stats, stages) {
                                                                             _id: pokemon.id,
                                                                             name: pokemon.name,
                                                                             color: pokemon.color.name,
-                                                                            img: IMG_POKEMON_PNG + pokemon.name + '.png',
+                                                                            img: IMG_POKEMON_PNG + pokemon.id + '.png',
                                                                             imgBox: IMG_POKEMON_PIXEL_PNG + pokemon.name + '.png',
+                                                                            imgGif: IMG_POKEMON_GIF + pokemon.id + '.gif',
                                                                             stages: stages,
                                                                             price: price
         });

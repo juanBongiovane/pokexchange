@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .pokemon-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -17,4 +19,13 @@
 .pokemon-wrapper img {
     width: 100%;
     height: 100%;
+}
+
+.text-box{
+    display: flex;
+    padding-bottom: 15px;
+    color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 900;
+    justify-content: center;
 }

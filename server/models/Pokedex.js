@@ -7,6 +7,7 @@ const pokedexSchema = new Schema({
     color: String,
     img: String,
     imgBox: String,
+    imgGif: String,
     stages: Number,
     price: Number
 });

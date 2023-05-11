@@ -23,17 +23,23 @@ const PokemonBox = ({pokemons, name})=>{
     const genericEmpty = `${BASE_API_URL}/public/images/generic/empty-pokemon.jpeg`;
     const filledPokemon = pokemonEmpty(pokemons, totalPokemon, genericEmpty);
     return (
-        <div className="pokemon-grid" style={{backgroundColor: name}}>
-            {filledPokemon.map((pokemon, index) => (
-                <div key={index} className="pokemon-wrapper">
-                    <img
-                        src={pokemon.url}
-                        alt={pokemon.name}
-                        // onClick={() => setSelectedPokemon(pokemon)}
-                    />
-                </div>
-            ))}
+        <div>
+            <span className="text-box">{name}</span>
+            <div className="pokemon-grid"
+                // style={{backgroundColor: name}}
+            >
+                {filledPokemon.map((pokemon, index) => (
+                    <div key={index} className="pokemon-wrapper">
+                        <img
+                            src={pokemon.url}
+                            alt={pokemon.name}
+                            // onClick={() => setSelectedPokemon(pokemon)}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
+
     );
 }
 export default PokemonBox;

@@ -20,12 +20,7 @@ function HomePage() {
         <AppBackground>
             <TrainerHUD></TrainerHUD>
             <div>
-                <div>
-                    <h1>Carousel Slider</h1>
-                    <div>
-                        <Carousel components={components} />
-                    </div>
-                </div>
+                <Carousel components={components} />
             </div>
         </AppBackground>
     );
