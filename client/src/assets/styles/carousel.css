@@ -19,6 +19,10 @@
     margin: 0 auto;
 }
 
+.carousel > div:first-child {
+    margin: 10px;
+}
+
 .carousel::after {
     content: "";
     position: absolute;

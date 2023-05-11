@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const individualPokemonSchema = new Schema({
+/*const individualPokemonSchema = new Schema({
     name: String,
     level: String,
     species: {
         type: Number,
         ref: "Pokedex"
     }
-})
+})*/
 
 const userSchema = new Schema({
     name: String,
@@ -25,7 +25,20 @@ const userSchema = new Schema({
         ref: "Users"
     }],
     lastLogin: Date,
-    pokemons:[individualPokemonSchema]
+    boxes: [
+        {
+            name: String,
+            pokemons:[{
+                name: String,
+                level: String,
+                species: {
+                    type: Number,
+                    ref: "Pokedex"
+                }
+            }]
+        }
+    ]
+
 });
 
 module.exports = mongoose.model('Users', userSchema);

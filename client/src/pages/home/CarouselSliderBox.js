@@ -3,19 +3,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 import "swiper/css";
 import { Paper, IconButton } from "@mui/material";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import "../styles/carousel.css"
+import { ArrowForwardIos } from "@mui/icons-material";
+import "../../assets/styles/carousel.css"
+
 
 SwiperCore.use([Navigation]);
 
-export default function Carousel({ components }) {
+export default function Carousel({ children }) {
+
     return (
         <div className="carousel-container" >
             <div className="carousel-box">
                 <div className="carousel">
                     <Swiper
                         spaceBetween={30}
-                        slidesPerView={1.1}
+                        slidesPerView={1}
                         centeredSlides={true}
                         loop={true}
                         speed={1600}
@@ -25,7 +27,7 @@ export default function Carousel({ components }) {
                         }}
                         className="mySwiper"
                     >
-                        {components.map((component, index) => (
+                        {children.map((component, index) => (
                             <SwiperSlide key={index}>
                                 <Paper>{component}</Paper>
                             </SwiperSlide>

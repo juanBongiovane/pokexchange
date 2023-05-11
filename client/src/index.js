@@ -25,7 +25,49 @@ const MyRoot = function() {
         "password": "0c08e45dbfeadbf220931c3d4c10578856c32b90d202af62b4c713a3149d1b7d3f9cc5a6aa6138906784128ae66eb0412156f774a9d38f5326831cf0794efaa3",
         "trainerAvatar": 8,
         "friends": [],
-        "pokemons": [],
+        "boxes": [
+            {
+                "name": "caja 1",
+                "pokemons": [
+                    {
+                        "name": "raichu",
+                        "level": 1,
+                        "species": {
+                            "name": "Raichu",
+                            "color": "yellow",
+                            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/26.png",
+                            "imgBox": "https://img.pokemondb.net/sprites/sword-shield/normal/raichu.png",
+                            "imgGif": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/26.gif",
+                            "stages": 3,
+                            "price": 400
+                        },
+                        "_id": "645d654a00264d01121a5712"
+                    },
+                    {
+                        "name": "bulbasaur",
+                        "level": 20,
+                        "species": {
+                            "name": "Raichu",
+                            "color": "yellow",
+                            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png",
+                            "imgBox": "https://img.pokemondb.net/sprites/sword-shield/normal/bulbasaur.png",
+                            "imgGif": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/1.gif",
+                            "stages": 3,
+                            "price": 400
+                        },
+                        "_id": "645d658c9a2700ae894529ec"
+                    }
+                ]
+            },
+            {
+                "name": "caja 2",
+                "pokemons": []
+            },
+            {
+                "name": "caja 3",
+                "pokemons": []
+            }
+        ],
         "__v": 0
     });
 

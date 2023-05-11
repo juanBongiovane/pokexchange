@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import '../styles/pokemonBox.css';
+import React, {useContext} from 'react';
+import '../../assets/styles/pokemonBox.css';
 import {BASE_API_URL} from "../../constants/apiRoutes";
+import {DataContext} from "./index";
+import {Box} from "@mui/material";
 
-
-// const [selectedPokemon, setSelectedPokemon] = useState(null);
 
 
 
 const PokemonBox = ({pokemons, name})=>{
+
+    const { selectedPokemon, handlePokemonSelected } = useContext(DataContext);
+    const genericEmpty = `${BASE_API_URL}/public/images/generic/empty-pokemon.jpeg`;
     const pokemonEmpty = (pokemons, totalPokemon, genericEmpty) => {
         const pokemonsCopy = [...pokemons];
         while (pokemonsCopy.length < totalPokemon) {
             pokemonsCopy.push({
-                url: genericEmpty,
+                species: {imgGif: genericEmpty},
                 name: 'Pokemon Empty',
             });
         }
@@ -20,20 +23,20 @@ const PokemonBox = ({pokemons, name})=>{
     };
 
     const totalPokemon = 30;
-    const genericEmpty = `${BASE_API_URL}/public/images/generic/empty-pokemon.jpeg`;
+
     const filledPokemon = pokemonEmpty(pokemons, totalPokemon, genericEmpty);
     return (
         <div>
-            <span className="text-box">{name}</span>
+            <Box className="text-box">{name}</Box>
             <div className="pokemon-grid"
-                // style={{backgroundColor: name}}
             >
                 {filledPokemon.map((pokemon, index) => (
-                    <div key={index} className="pokemon-wrapper">
+                    <div key={index}
+                         className="pokemon-wrapper"
+                         onClick={() => handlePokemonSelected(pokemon.name)}>
                         <img
-                            src={pokemon.url}
+                            src={pokemon.species.imgGif}
                             alt={pokemon.name}
-                            // onClick={() => setSelectedPokemon(pokemon)}
                         />
                     </div>
                 ))}
