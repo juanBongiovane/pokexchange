@@ -3,9 +3,11 @@ import {TrainerContext, UserContext} from "../../index";
 import {BASE_API_URL} from "../../constants/apiRoutes";
 import * as React from "react";
 import '../../assets/styles/TrainerHUD.css';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 
-const TrainerHUD = ({}) =>{
+const TrainerHUD = () => {
 
     const [user, _] = useContext(UserContext);
     const trainers = useContext(TrainerContext);
@@ -24,9 +26,15 @@ const TrainerHUD = ({}) =>{
                         backgroundImage: `url("${BASE_API_URL}/public/images/trainer/${trainers[(user.trainerAvatar)-1].name}.png")`,
                     }}
                 ></div>
-                <p>{user.name}</p>
+                <p
+                    className='hubText'
+                >{user.name}</p>
             </div>
-            <div style={{ display: 'flex' }}>
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-evenly'
+            }}>
                 <div className="trainer-coin">
                     <img
                         className="poke-coin"
@@ -34,6 +42,8 @@ const TrainerHUD = ({}) =>{
                         alt={"Poke Coin"}/>
                     <p>200</p>
                 </div>
+                <SettingsIcon/>
+                <PowerSettingsNewIcon/>
             </div>
         </div>
 

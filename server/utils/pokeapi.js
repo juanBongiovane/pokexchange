@@ -1,12 +1,17 @@
-const {POKE_API_URL_POKEMON}= require('../config/constants')
-function pokeApiFindPokemon(name) {
+const {POKE_API_URL_POKEMON, POKE_API_URL_SPECIES}= require('../config/constants')
 
+const checkEmpty = (name) => {
     if (name === '' || name === undefined || name === null) {
         console.error('El nombre no puede estar vacío');
         throw new Error('El nombre no puede estar vacío');
     }
+}
 
-    const url = POKE_API_URL_POKEMON + name;
+function pokeApiFindPokemon(name) {
+
+    checkEmpty(name);
+
+    const url = POKE_API_URL_SPECIES + name;
 
     return fetch(url).then(response=> {
         if (!response.ok) {
@@ -27,4 +32,19 @@ function pokeApiEvolution(url) {
     });
 }
 
-module.exports = { pokeApiFindPokemon, pokeApiEvolution};
+function pokeApiStats(name) {
+
+    checkEmpty(name);
+
+    const url = POKE_API_URL_POKEMON + name;
+
+    return fetch(url).then(response=> {
+        if (!response.ok) {
+            console.error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    });
+}
+
+module.exports = { pokeApiFindPokemon, pokeApiEvolution, pokeApiStats};

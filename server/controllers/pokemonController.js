@@ -1,6 +1,6 @@
 const { findAndSavePokemon } = require('../utils/savePokemon');
 
-findAndSavePokemon('empoleon').catch((error) => {
+findAndSavePokemon('').catch((error) => {
     console.error("Error en findAndSavePokemon:", error);
 });
 

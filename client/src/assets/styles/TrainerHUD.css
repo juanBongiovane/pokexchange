@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .hud{
     z-index: 1000;
     position: absolute;
@@ -5,10 +7,15 @@
     top: 30px;
     display: flex;
     width: 200px;
-    border: solid 1px black;
+    border-radius: 25px;
     background: white;
     flex-direction: column;
 
+}
+
+.hubText {
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 0;
 }
 .trainer-image {
     width: 65px;
@@ -20,17 +27,17 @@
 .trainer-coin{
     display: flex;
     align-items: center;
-    border: solid 1px #61dafb;
     border-radius: 20px;
-    background: #81d8f1;
-    margin: 10px;
-    padding: 5px;
+    background: #2e2e2e;
+    margin: 10px 0;
+    padding: 5px 0 4px 0;
 }
 .trainer-coin p {
     margin: 0;
     padding: 0 10px;
-    color: #e6a71e;
-    font-weight: 600;
+    color: #ffc445;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 900;
 }
 .poke-coin{
     padding-left: 10px;

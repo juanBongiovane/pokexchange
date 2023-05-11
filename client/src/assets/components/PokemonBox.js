@@ -7,7 +7,7 @@ import {BASE_API_URL} from "../../constants/apiRoutes";
 
 
 
-const PokemonBox = ({pokemons})=>{
+const PokemonBox = ({pokemons, name})=>{
     const pokemonEmpty = (pokemons, totalPokemon, genericEmpty) => {
         const pokemonsCopy = [...pokemons];
         while (pokemonsCopy.length < totalPokemon) {
@@ -23,7 +23,7 @@ const PokemonBox = ({pokemons})=>{
     const genericEmpty = `${BASE_API_URL}/public/images/generic/empty-pokemon.jpeg`;
     const filledPokemon = pokemonEmpty(pokemons, totalPokemon, genericEmpty);
     return (
-        <div className="pokemon-grid">
+        <div className="pokemon-grid" style={{backgroundColor: name}}>
             {filledPokemon.map((pokemon, index) => (
                 <div key={index} className="pokemon-wrapper">
                     <img
