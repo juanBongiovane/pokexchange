@@ -7,3 +7,7 @@
 #trainer-select-label {
     margin-top: 0;
 }
+
+.no-padding-container {
+    padding: 0 !important;
+}

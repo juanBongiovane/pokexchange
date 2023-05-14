@@ -60,8 +60,6 @@ const TrainerSelector = ({initialValue, onTrainerChange }) => {
                         <ArrowForwardIosIcon
                         />
                     </IconButton>
-
-                    {/*<InputLabel>{trainers[selectedTrainer].name}</InputLabel>*/}
                 </div>
        </div>
     );

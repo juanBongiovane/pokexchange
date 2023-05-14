@@ -5,16 +5,27 @@ import * as React from "react";
 import '../../assets/styles/TrainerHUD.css';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import SettingsIcon from '@mui/icons-material/Settings';
+import {IconButton, Link} from "@mui/material";
+import Cookies from "js-cookie";
+import {Navigate, useNavigate} from "react-router-dom";
 
 
 const TrainerHUD = () => {
 
     const [user, _] = useContext(UserContext);
     const trainers = useContext(TrainerContext);
+    const navigate = useNavigate();
+
+    const logout = () => {
+        if (Cookies.get('token')) {
+            Cookies.remove('token');
+            console.log('Cookie borrada');
+        }
+        navigate("../login")
+    };
 
     return (
-        <div
-        className={"hud"}>
+        <div className={"hud"}>
             <div
                 style={{
                     display: 'flex',
@@ -43,10 +54,13 @@ const TrainerHUD = () => {
                     <p>200</p>
                 </div>
                 <SettingsIcon/>
-                <PowerSettingsNewIcon/>
+                <IconButton onClick={logout}
+                            style={{ color: '#2e2e2e' }}>
+                    <PowerSettingsNewIcon />
+                </IconButton>
+
             </div>
         </div>
-
     );
 }
 export default TrainerHUD;

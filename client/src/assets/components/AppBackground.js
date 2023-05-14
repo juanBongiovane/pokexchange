@@ -1,6 +1,8 @@
 import {Box, Container} from "@mui/material";
 import React from "react";
 
+import '../../assets/styles/appBackground.css';
+
 function AppBackground({ children }) {
     return (
         <Container maxWidth={false}

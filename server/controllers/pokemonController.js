@@ -1,8 +1,22 @@
 const { findAndSavePokemon } = require('../utils/savePokemon');
+const Pokedex = require("../models/Pokedex");
 
-findAndSavePokemon('bulbasaur').catch((error) => {
-    console.error("Error en findAndSavePokemon:", error);
-});
+// findAndSavePokemon('bulbasaur').catch((error) => {
+//     console.error("Error en findAndSavePokemon:", error);
+// });
+//
+// const getPokemons = async () => {
+//     try {
+//         const pokemons = await Pokedex.find({ name: 'pichu' });
+//         console.log(pokemons);
+//     } catch (error) {
+//         console.error('Error fetching pokemons:', error);
+//     }
+// };
+//
+// getPokemons();
+
+
 
 exports.createPokemon = async (req, res) => {
     try {

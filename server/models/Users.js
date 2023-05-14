@@ -1,44 +1,80 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-
-/*const individualPokemonSchema = new Schema({
-    name: String,
-    level: String,
-    species: {
-        type: Number,
-        ref: "Pokedex"
-    }
-})*/
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
-    name: String,
-    birthDate: Date,
+    name: {
+        type: String,
+        required: true
+    },
+    birthDate: {
+        type: Date,
+        required: true
+    },
     email: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
-    password: String,
-    trainerAvatar: Number,
-    coin: Number,
-    friends:  [{
+    password: {
+        type: String,
+        required: true
+    },
+    trainerAvatar: {
+        type: Number,
+        default: 0
+    },
+    coin: {
+        type: Number,
+        default: 0
+    },
+    friends: [{
         type: Schema.Types.ObjectId,
-        ref: "Users"
+        ref: 'User'
     }],
-    lastLogin: Date,
-    boxes: [
-        {
-            name: String,
-            pokemons:[{
-                name: String,
-                level: String,
-                species: {
-                    type: Number,
-                    ref: "Pokedex"
-                }
-            }]
-        }
-    ]
+    lastLogin: {
+        type: Date,
+        default: Date.now
+    },
+    boxes: [{
+        name: {
+            type: String,
+            default: "Box 1"
+        },
+        pokemons: [{
+            name: {
+                type: String,
 
+            },
+            level: {
+                type: String,
+            },
+            species: {
+                type: Number,
+                ref: 'Pokedex',
+            }
+        }]
+    }]
 });
 
-module.exports = mongoose.model('Users', userSchema);
+userSchema.pre('save', async function (next) {
+    try {
+        if (!this.isModified('password')) {
+            return next();
+        }
+        this.password = await bcrypt.hash(this.password, 10);
+        next();
+    } catch (error) {
+        return next(error);
+    }
+});
+
+userSchema.methods.comparePassword = async function (password) {
+    try {
+        return await bcrypt.compare(password, this.password);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+module.exports = mongoose.model('User', userSchema);

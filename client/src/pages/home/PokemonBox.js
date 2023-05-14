@@ -4,9 +4,6 @@ import {BASE_API_URL} from "../../constants/apiRoutes";
 import {DataContext} from "./index";
 import {Box} from "@mui/material";
 
-
-
-
 const PokemonBox = ({pokemons, name})=>{
 
     const { selectedPokemon, handlePokemonSelected } = useContext(DataContext);
@@ -33,7 +30,7 @@ const PokemonBox = ({pokemons, name})=>{
                 {filledPokemon.map((pokemon, index) => (
                     <div key={index}
                          className="pokemon-wrapper"
-                         onClick={() => handlePokemonSelected(pokemon.name)}>
+                         onClick={() => handlePokemonSelected(pokemon)}>
                         <img
                             src={pokemon.species.imgGif}
                             alt={pokemon.name}
