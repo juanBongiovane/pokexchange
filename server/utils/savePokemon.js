@@ -21,7 +21,8 @@ function savePokemon (pokemon, stats, stages) {
                                                                             imgBox: IMG_POKEMON_PIXEL_PNG + pokemon.name + '.png',
                                                                             imgGif: IMG_POKEMON_GIF + pokemon.id + '.gif',
                                                                             stages: stages,
-                                                                            price: price
+                                                                            price: price,
+                                                                            types:stats.types.map((typeObject) => typeObject.type.name)
         });
 
         return newPokemon.save().then(s=>console.log(`${newPokemon.name} guardado correctamente.`));

@@ -43,12 +43,12 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res, next) => {
+
     try {
         console.log(req.body)
         const { email, password } = req.body;
         const user = await User.findOne({ email });
 
-        console.log(user)
         if (!user) {
             return res.status(400).send({ error: 'Invalid email or password' });
         }
@@ -63,6 +63,7 @@ router.post('/login', async (req, res, next) => {
             expiresIn: '1h'
         });
 
+        console.log(token)
         res.send(token);
 
     } catch (err) {

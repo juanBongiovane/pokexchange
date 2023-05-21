@@ -6,12 +6,14 @@ const { authenticateToken } = require('./middleware');
 
 
 router.post('/pokemon', authenticateToken, pokemonController.createPokemon);
-router.get('/pokemons', authenticateToken, pokemonController.getPokemons);
+router.get('/pokemons', authenticateToken, pokemonController.getPokemon);
 
 router.post('/newUser', authenticateToken, userController.createUser);
 router.get('/users', authenticateToken, userController.getUser);
 
 
 router.get('/user', authenticateToken, userController.getUserById);
+
+router.post('/search', authenticateToken, pokemonController.getPokemon )
 
 module.exports = router;

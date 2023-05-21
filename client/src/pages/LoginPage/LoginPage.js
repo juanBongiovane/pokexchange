@@ -1,5 +1,5 @@
 import '../../assets/styles/loginForm.css';
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Box, Button, Grid, TextField } from "@mui/material";
 import PersonAddSharpIcon from '@mui/icons-material/PersonAddSharp';
 
@@ -9,13 +9,14 @@ import { BASE_API_URL } from "../../constants/apiRoutes";
 import LoginIcon from '@mui/icons-material/Login';
 import {useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
+import {UserContext} from "../../index";
 
 const LoginPage = () => {
 
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const [userData, setUserData, setRefresh] = useContext(UserContext);
 
-    const navigateSignup = useNavigate();
-    const navigateLogin = useNavigate();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,14 +27,14 @@ const LoginPage = () => {
         try {
             const response = await axios.post(BASE_API_URL + '/api/auth/login', formData, { withCredentials: false });
             Cookies.set('token', response.data);
-            navigateLogin("../home");
+            setRefresh(true);
         } catch (err) {
             alert('Failed to log in');
         }
     };
 
     const signup = ()=>{
-        navigateSignup("../signup");
+        navigate("../signup");
     }
 
     return (

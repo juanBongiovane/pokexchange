@@ -20,7 +20,6 @@ const PokemonBox = ({pokemons, name})=>{
     };
 
     const totalPokemon = 30;
-
     const filledPokemon = pokemonEmpty(pokemons, totalPokemon, genericEmpty);
     return (
         <div>

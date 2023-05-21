@@ -47,6 +47,7 @@ exports.getUserByName = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
     try {
+        console.log("userId: " + req.userId);
         const userId = req.userId;
         const user = await User.findById(userId)
             .populate('friends')

@@ -7,18 +7,19 @@ import Cookies from 'js-cookie';
 import ShopPage from "../pages/home/ShopPage";
 
 const isAuthenticate = (e) => {
-    if (Cookies.get('token')) return e;
-    return <Navigate to="/login" />;
+    const token = Cookies.get('token');
+    if (token !== undefined && token != null && token !== "") return e;
+    return <LoginPage />;
 };
 
 const AppRoutes = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="/" element={isAuthenticate(<HomePage />)} />
                 <Route path="/home" element={isAuthenticate(<HomePage />)} />
                 <Route path="/shop" element={isAuthenticate(<ShopPage />)} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="/login" element={isAuthenticate(<HomePage />)} />
                 <Route path="/signUp" element={<SignUp />} />
             </Routes>
         </Router>

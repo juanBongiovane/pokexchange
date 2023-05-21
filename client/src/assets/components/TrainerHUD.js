@@ -12,7 +12,7 @@ import {Navigate, useNavigate} from "react-router-dom";
 
 const TrainerHUD = () => {
 
-    const [user, _] = useContext(UserContext);
+    const [user, setUserData] = useContext(UserContext);
     const trainers = useContext(TrainerContext);
     const navigate = useNavigate();
 
@@ -20,10 +20,10 @@ const TrainerHUD = () => {
         if (Cookies.get('token')) {
             Cookies.remove('token');
             console.log('Cookie borrada');
+            setUserData(null);
         }
         navigate("../login")
     };
-
     return (
         <div className={"hud"}>
             <div

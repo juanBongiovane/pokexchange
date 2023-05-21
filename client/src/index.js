@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import {BASE_API_URL} from "./constants/apiRoutes";
 
+
 export const TrainerContext = createContext(null);
 export const UserContext = createContext(null);
 const data = {
@@ -14,10 +15,15 @@ const data = {
 
 const MyRoot = function() {
 
-    const [userData, setUserData] = useState();
+    const [userData, setUserData] = useState(null);
+    const [refresh, setRefresh] = useState(false);
     const fetchUserById = async () => {
         try {
             const token = Cookies.get('token');
+            console.log(token);
+            if (token === undefined || token == null || token === "") {
+                return;
+            }
             const response = await axios.get(BASE_API_URL + '/user', {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -32,11 +38,19 @@ const MyRoot = function() {
     };
 
     useEffect(() => {
-        fetchUserById();
-    }, []);
+        const token = Cookies.get('token');
+        console.log("Index:", userData, "token", token);
+        if (userData == null && (token !== undefined && token != null && token !== "")) {
+            console.log("call fetch");
+            fetchUserById();
+        }
+        setRefresh(false);
+        console.log(refresh)
+    }, [refresh]);
+
 
     return (
-            <UserContext.Provider value={[userData, setUserData] }>
+            <UserContext.Provider value={[userData, setUserData, setRefresh] }>
                 <TrainerContext.Provider value={data.trainers}>
                     <React.StrictMode>
                         <AppRoutes />

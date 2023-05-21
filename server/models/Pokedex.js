@@ -9,7 +9,8 @@ const pokedexSchema = new Schema({
     imgBox: String,
     imgGif: String,
     stages: Number,
-    price: Number
+    price: Number,
+    types:[String],
 });
 
 module.exports = mongoose.model('Pokedex', pokedexSchema, "pokedex");

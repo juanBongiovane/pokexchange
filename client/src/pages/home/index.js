@@ -7,9 +7,6 @@ import Carousel from "./CarouselSliderBox";
 import PokemonView from "./PokemonView";
 import {Box, CircularProgress, Grid} from "@mui/material";
 import {UserContext} from "../../index";
-import axios from "axios";
-import Cookies from 'js-cookie';
-import {BASE_API_URL} from "../../constants/apiRoutes";
 import ShopLink from "../../assets/components/ShopLink";
 
 
@@ -35,7 +32,6 @@ function HomePage() {
                         <TrainerHUD></TrainerHUD>
                         <ShopLink></ShopLink>
                     </Box>
-
                     <DataContext.Provider value={{ selectedPokemon, handlePokemonSelected }}>
                             <Grid container
                                   direction="row"
