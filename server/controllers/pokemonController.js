@@ -38,25 +38,45 @@ exports.getPokemon = async (req, res) => {
     try{
         const search = req.body.term;
         const page = parseInt(req.query.page, 10) || 1;
-        const limit = parseInt(req.query.limit, 10) || 25;
+        const limit = parseInt(req.query.limit, 10) || 16;
 
         if (!search || search.trim() === '') {
             return res.status(400).json({ message: 'El término de búsqueda está vacío' });
         }
-        const skip = (page - 1) * limit;
 
-        const pokemons = await Pokedex.find({ name: { $regex: search, "$options": "i" } })
-            .skip(skip)
-            .limit(limit);
+        const skip = (page - 1) * limit ;
+        let total = 0;
 
-        const total = await Pokedex.countDocuments({ name: { $regex: search, "$options": "i" } });
+        if (search.trim() === 'default') {
+            const dbResult = await Promise.all([
+                Pokedex.countDocuments({ _id: { $gte: 1, $lte: 1000 } }),
+                Pokedex.find({ _id: { $gte: 1, $lte: 1000 } })
+                    .sort({ _id: 1 })
+                    .skip(skip)
+                    .limit(limit)]);
 
-        res.json({
-            total,
-            page,
-            pages: Math.ceil(total / limit),
-            pokemons
-        });
+            res.json({
+                total: dbResult[0],
+                page,
+                pages: Math.ceil(dbResult[0] / limit),
+                pokemons: dbResult[1]
+            });
+        }else{
+            const dbResult = await Promise.all([
+                Pokedex.countDocuments({ name: { $regex: search, "$options": "i" } }),
+                Pokedex.find({ name: { $regex: search, "$options": "i" } })
+                    .sort({ _id: 1 })
+                    .skip(skip)
+                    .limit(limit)
+            ]);
+
+            res.json({
+                total: dbResult[0],
+                page,
+                pages: Math.ceil(dbResult[0] / limit),
+                pokemons: dbResult[1]
+            });
+        }
 
     }catch (error){
         res.status(500).json({ message: error.message });

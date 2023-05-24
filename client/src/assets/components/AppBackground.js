@@ -6,10 +6,10 @@ import '../../assets/styles/appBackground.css';
 function AppBackground({ children }) {
     return (
         <Container maxWidth={false}
-                   sx={{ height: '100vh', padding: 0}}
+                   sx={{ minHeight: '100vh', padding: 0}}
                    className="no-padding-container"
         >
-            <Box sx={{ bgcolor: '#cfe8fc', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ bgcolor: '#cfe8fc', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 {children}
             </Box>
         </Container>

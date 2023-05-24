@@ -1,46 +1,99 @@
 import * as React from "react";
 import '../../assets/styles/PokemonShop.css';
-import {Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
+import {
+    Box,
+    Card,
+    CardContent,
+    CardMedia,  Skeleton,
+    Typography
+} from "@mui/material";
 import {BASE_API_URL} from "../../constants/apiRoutes";
+import {useState} from "react";
+import ModalShop from "./ModalShop";
 
 
 
 
 
-const PokemonCard = ({pokemon}) => {
+const PokemonCard = ({ pokemon }) => {
 
-    return (
-        <Card sx={{ width: 150, display: 'flex', flexDirection: 'column' }}>
-            <CardMedia
-                component="img"
-                image={pokemon.img}
-                title={pokemon.name}
-            />
+    const [openModal, setOpenModal] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
 
-            <CardContent sx={{
-                            padding: 1,
-                            flexGrow: 1,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between'
-                        }}>
-                <Typography variant="body2" noWrap>{pokemon.name}</Typography>
-                <Typography variant="body2"></Typography>
-                <div className="card-coin">
-                    <img
-                        className="pokeCard-coin"
-                        src={`${BASE_API_URL}/public/images/generic/pokeCoin.png`}
-                        alt={"Poke Coin"}/>
-                    <p>{pokemon.price}</p>
-                </div>
-                <Button variant="contained"
-                        color="primary"
-                        size="small"
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
+
+    const handleImageLoad = () => {
+        console.log("dsfsadfa")
+        setImageLoaded(true);
+    };
+
+
+    if (pokemon !== "null") {
+        return (
+            <Card
+                sx={{
+                    width: "150px",
+                    height: "250px",
+                    display: "flex",
+                    flexDirection: "column",
+                    margin: "5px",
+                    backgroundColor: "yellow"
+                }}
+            >
+                {!imageLoaded && <Skeleton animation="pulse" variant="rounded" width={150} height={150} />}
+                <CardMedia
+                    component="img"
+                    image={pokemon.img}
+                    title={pokemon.name}
+                    onLoad={handleImageLoad}
+                    sx={{ display: imageLoaded ? 'initial' : 'none' }}
+                />
+                <CardContent
+                    sx={{
+                        flexGrow: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        padding: "6px 6px !important",
+                        margin: "10px 15px 0 15px"
+                    }}
                 >
-                    Comprar
-                </Button>
-            </CardContent>
-        </Card>
-    );
-}
+                    <Typography variant="body2" className="pokeCard-text" noWrap>
+                        {pokemon.name}
+                    </Typography>
+                    <Box className="card-coin" onClick={handleOpenModal}>
+                        <img
+                            className="pokeCard-coin"
+                            src={`${BASE_API_URL}/public/images/generic/pokeCoin.png`}
+                            alt={"Poke Coin"}
+                        />
+                        <p>{pokemon.price}</p>
+                    </Box>
+                </CardContent>
+                <ModalShop open={openModal} onClose={handleCloseModal} pokemon={pokemon} />
+            </Card>
+        );
+    } else {
+        return (
+            <Card
+                sx={{
+                    width: "150px",
+                    height: "250px",
+                    display: "flex",
+                    flexDirection: "column",
+                    margin: "5px",
+                }}
+            >
+                <CardMedia component="img" image={`${BASE_API_URL}/public/images/generic/empty-shop.jpg`} title={'Empty'} style={{ opacity: 0.4 }} />
+            </Card>
+        );
+    }
+};
+
 export default PokemonCard;
