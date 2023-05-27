@@ -39,15 +39,9 @@ exports.getPokemon = async (req, res) => {
         const search = req.body.term;
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 16;
-
-        if (!search || search.trim() === '') {
-            return res.status(400).json({ message: 'El término de búsqueda está vacío' });
-        }
-
         const skip = (page - 1) * limit ;
-        let total = 0;
 
-        if (search.trim() === 'default') {
+        if (search.trim() === 'default' || !search || search.trim() === '' ) {
             const dbResult = await Promise.all([
                 Pokedex.countDocuments({ _id: { $gte: 1, $lte: 1000 } }),
                 Pokedex.find({ _id: { $gte: 1, $lte: 1000 } })

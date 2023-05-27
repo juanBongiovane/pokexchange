@@ -2,14 +2,11 @@
 .shop{
     margin-top: 30px;
     display: flex;
-    width: 200px;
-    /* min-height: 60px; */
-    border-radius: 18px;
+    border-radius: 8px;
     background: white;
     flex-direction: row;
     padding: 10px;
-    box-shadow: 3px 7px 14px 0px rgb(0 0 0 / 45%);
-    /* align-content: center; */
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
     align-items: center;
     justify-content: space-evenly;
 }
@@ -43,11 +40,35 @@
     padding-top: 18px;
 }
 
+.pokemonNumber{
+    position: absolute;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 10px;
+    color: #72505038;
+}
+.myPokeomn{
+    height: 250px;
+    position: absolute;
+    width: 150px;
+    border-radius: 6px;
+    border: 1px solid #f9ffa0;
+    pointer-events: none;
+}
+.myPokeomn span{
+    font-size: 16px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
 .card-coin{
+    cursor: pointer;
     display: flex;
     align-items: center;
     border-radius: 8px;
-    background: #0651c1;
+    background-color: #0651c1;
     margin: 10px 0;
     padding: 5px;
     justify-content: center;
@@ -74,12 +95,13 @@
 }
 
 .searchBar {
-    padding: 5px;
+    padding: 5px 0;
     display: flex;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 7px;
     background-color: white;
     width: 100%;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
 }
 .container{
     flex: auto;
@@ -90,16 +112,15 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    border-radius: 20px 20px 0 0;
+    border-radius: 7px 7px 0 0;
     background-color: white;
     margin-top: 10px;
     padding: 20px;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
 }
-
-
 .pagination{
     display: flex;
     height: 50px;
@@ -107,6 +128,107 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 13px;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 7px 7px;
     width: 100%;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+}
+.modal-container{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+.imgGif-pokemon{
+    display: flex;
+    width: 100%;
+    height: 80px;
+    justify-content: center;
+    margin-top: 40px;
+}
+.imgGif-pokemon img{
+    width: 80px;
+}
+.pokemon-info{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 20px;
+}
+.pokemon-info h3{
+    margin-bottom: 7px;
+    margin-right: 15px;
+}
+.pokemon-info img{
+    height: 20px;
+    margin: 6px;
+}
+.contPokemon-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+.contPokemon-container div {
+    margin: 0 15px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+
+}
+.contPokemon-container div h4 {
+    margin: 0 15px;
+    padding: 8px 2px;
+}
+.modal-buton{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+.modal-buton button{
+    font-weight: bold;
+    height: 30px;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px 0px rgb(0 0 0 / 15%);
+}
+.modal-buton button:nth-child(2){
+    background-color: #0651c1;
+    pointer-events: initial;
+}
+.disabled-card-coin{
+    cursor: no-drop !important;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background-color: rgba(12, 12, 12, 0.15) !important;
+    margin: 10px 0;
+    padding: 5px;
+    justify-content: center;
+    box-shadow: 3px 3px 3px 0px rgb(0 0 0 / 15%);
+}
+
+.disabled-card-coin p {
+    margin: 0;
+    padding: 0 10px;
+    color: rgba(236, 26, 26, 0.58);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    font-weight: 900;
+}
+.disabled-card-coin
+.pokeCard-coin{
+    opacity: 0.5;
+    padding-left: 10px;
+    width: 20px;
+}
+
+.alert-saldo{
+    position: absolute;
+    bottom: -55px;
+    background-color: #e72f2f !important;
+    width: 89%;
 }

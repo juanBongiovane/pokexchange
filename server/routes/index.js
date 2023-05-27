@@ -14,6 +14,12 @@ router.get('/users', authenticateToken, userController.getUser);
 
 router.get('/user', authenticateToken, userController.getUserById);
 
-router.post('/search', authenticateToken, pokemonController.getPokemon )
+router.post('/search', authenticateToken, pokemonController.getPokemon);
+
+router.post('/buypokemon', authenticateToken, userController.buyPokemon);
+
+router.post('/sellpokemon', authenticateToken, userController.sellPokemon);
+
+router.post('/savepokemon', authenticateToken, userController.savePokemon);
 
 module.exports = router;

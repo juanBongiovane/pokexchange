@@ -5,10 +5,17 @@ import PokemonBox from "./PokemonBox";
 import TrainerHUD from "../../assets/components/TrainerHUD";
 import Carousel from "./CarouselSliderBox";
 import PokemonView from "./PokemonView";
-import {Box, CircularProgress, Grid} from "@mui/material";
+import {Box, CircularProgress, createTheme, Grid, styled, ThemeProvider} from "@mui/material";
 import {UserContext} from "../../index";
 import ShopLink from "../../assets/components/ShopLink";
 
+const ModifiedGrid = styled(Grid)(({theme}) => ({
+    justifyContent: "flex-start",
+    [theme.breakpoints.down('md')]: {
+        justifyContent: "center",
+        marginTop: "20px"
+    }
+}));
 
 export const DataContext = createContext(null);
 function HomePage() {
@@ -40,7 +47,7 @@ function HomePage() {
                                   rowSpacing={1}
                                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                             >
-                                <Grid item xs={6}>
+                                <ModifiedGrid container item md={6}>
                                     <Carousel>
                                         {userData.boxes.map(box => (
                                             <PokemonBox
@@ -49,10 +56,10 @@ function HomePage() {
                                             ></PokemonBox>
                                         ))}
                                     </Carousel>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <PokemonView selectedPokemon={selectedPokemon} ></PokemonView>
-                                </Grid>
+                                </ModifiedGrid>
+                                <ModifiedGrid container item md={6}>
+                                    <PokemonView ></PokemonView>
+                                </ModifiedGrid>
                             </Grid>
                     </DataContext.Provider>
                 </>

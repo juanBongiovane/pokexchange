@@ -38,16 +38,31 @@ function ShopPage() {
     const token = Cookies.get('token');
 
     const [open, setOpen] = React.useState(false);
+
+    const [myPokemon, setMyPokemon] = useState([]);
+
+    useEffect(() => {
+        if (userData !== null) {
+            userData.boxes.forEach((box) => {
+                box.pokemons.forEach((pokemon) => {
+                    const pokemonId = pokemon.species._id;
+
+                    if (!myPokemon.includes(pokemonId)) {
+                        myPokemon.push(pokemonId);
+                    }
+                });
+            });
+            setMyPokemon([...myPokemon]);
+        }
+    }, [userData]);
+
+
     const handleOpen = () => {
-        console.log("openModal")
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
 
-
-
     const handleSearchSubmit = async (searchTerm) => {
-        console.log("Llamada a Handle Submit");
         try {
             const response = await axios.post(BASE_API_URL+'/search',
                 { term: searchTerm },
@@ -59,7 +74,6 @@ function ShopPage() {
                 }
             );
             setSearchResults(response.data);
-            console.log(response.data)
         } catch (error) {
             console.error(error);
         }
@@ -99,7 +113,6 @@ function ShopPage() {
             console.error('Error al obtener la página siguiente:', error);
         }
     };
-
 
     const handlePageChange = (event, page) => {
         if (page === searchResults.page + 1) {
@@ -169,9 +182,9 @@ function ShopPage() {
                        </div>
                        <div className={"container"}>
                            <div className={"pokemonContainer"}>
-                               {searchResults.pokemons.map((pokemon) => (
-                                   <PokemonCard pokemon={pokemon} key={pokemon._id} onClick={handleOpen} />
-                               ))}
+                               {searchResults.pokemons.map((pokemon) => {
+                                   return (<PokemonCard my={myPokemon.includes(pokemon._id)} pokemon={pokemon} key={pokemon._id} onClick={handleOpen} />);
+                               })}
                                {searchResults.pokemons.length < 16 ?
                                    Array(16 -searchResults.pokemons.length).fill(0).map((o, i) => {
                                        return (<PokemonCard pokemon={"null"} key={i+1000} />);

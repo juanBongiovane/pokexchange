@@ -7,7 +7,8 @@ import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {IconButton, Link} from "@mui/material";
 import Cookies from "js-cookie";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 
 
 const TrainerHUD = () => {
@@ -19,10 +20,12 @@ const TrainerHUD = () => {
     const logout = () => {
         if (Cookies.get('token')) {
             Cookies.remove('token');
-            console.log('Cookie borrada');
             setUserData(null);
         }
         navigate("../login")
+    };
+    const home = () => {
+        navigate("../home")
     };
     return (
         <div className={"hud"}>
@@ -51,9 +54,13 @@ const TrainerHUD = () => {
                         className="poke-coin"
                         src={`${BASE_API_URL}/public/images/generic/pokeCoin.png`}
                         alt={"Poke Coin"}/>
-                    <p>200</p>
+                    <p>{user.coin}</p>
                 </div>
-                <SettingsIcon/>
+                <IconButton onClick={home}
+                            style={{ color: '#2e2e2e' }}>
+                    <HomeIcon />
+                </IconButton>
+                <SettingsIcon style={{ color: '#2e2e2e' }} />
                 <IconButton onClick={logout}
                             style={{ color: '#2e2e2e' }}>
                     <PowerSettingsNewIcon />

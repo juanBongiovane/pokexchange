@@ -2,12 +2,14 @@
 .pokemon-view{
     position: relative;
     width: 400px;
+    height: 550px;
     background: #ffffff;
     padding: 20px 30px 20px 30px;
-    border-radius: 25px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
 }
 .pokemon-view div {
     display: flex;
@@ -19,6 +21,7 @@
     justify-content: space-evenly !important;
     flex-direction: column;
     align-items: center;
+    width: 400px;
     height: 556px;
     font-size: 12px;
 }
@@ -27,12 +30,18 @@
     width: 40%;
 }
 
+.pokemon-empty > span {
+    font-size: 11px;
+    position: inherit;
+}
+
 .text-view{
+    position: absolute;
     display: flex;
-    justify-content: center;
     font-weight: 900;
+    color: rgba(46, 46, 46, 0.25);
+    font-size: 40px;
     font-family: 'Press Start 2P', cursive;
-    color: #2e2e2e;
 }
 
 .pokemon-view  img {
@@ -41,34 +50,92 @@
 
 }
 
-.shadow{
-    background-color: #2e2e2e;
-    width: 186px;
-    height: 0;
-    flex-direction: column;
-    margin: 0 auto 40px auto;
-    box-shadow: -8px -4px 20px 3px rgb(0 0 0 / 58%);
-    border-radius: 20px;
-}
 .pokemon-data{
-    width: 160px;
     display: flex;
     flex-direction: column;
-    background: #2e2e2e;
-    border-radius: 25px;
-    color: white;
+    align-items: baseline;
     padding: 25px;
     font-size: 10px;
     font-family: 'Press Start 2P', cursive;
 }
 
-.pokemon-data > span:nth-child(2) {
-    padding-bottom: 10px;
+.pokemon-data > span:first-child {
+    font-size: 20px;
 }
-
 .pokemon-data > div {
-    padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
+    margin: 15px 0;
+}
+.pokemon-data > div > img{
+    margin-top: -10px;
+    margin-right: 20px;
+    margin-left: -5px;
+    height: 16px;
+    width: 80px;
 }
 
+/*Modal*/
+.modal-button{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+.modal-button button{
+    font-weight: bold;
+    height: 30px;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
+    box-shadow: 3px 3px 3px 0px rgb(0 0 0 / 15%);
+}
+.modal-button button:nth-child(2){
+    background-color: #0651c1;
+    pointer-events: initial;
+}
+.card-coin{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #0651c1;
+    margin: 10px 0;
+    padding: 5px;
+    justify-content: center;
+    box-shadow: 3px 3px 3px 0px rgb(0 0 0 / 15%);
+}
+.modal-button p {
+    margin: 0;
+    padding: 0 10px;
+    color: #ffb922 !important;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.pokeCard-coin{
+    padding-left: 10px;
+    width: 20px;
+}
+
+
+.input-Modal{
+    display: flex;
+    flex-direction: column;
+    height: 155px;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.modal-button-edit{
+    display: flex;
+    justify-content: space-around;
+}
+.modal-button-edit button {
+    box-shadow: 2px 2px 3px 0px rgb(0 0 0 / 15%);
+}
+
+.MuiMenu-root ul{
+    background-color: white;
+}

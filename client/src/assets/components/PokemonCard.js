@@ -15,7 +15,7 @@ import ModalShop from "./ModalShop";
 
 
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ my, pokemon }) => {
 
     const [openModal, setOpenModal] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -29,10 +29,8 @@ const PokemonCard = ({ pokemon }) => {
     };
 
     const handleImageLoad = () => {
-        console.log("dsfsadfa")
         setImageLoaded(true);
     };
-
 
     if (pokemon !== "null") {
         return (
@@ -43,10 +41,10 @@ const PokemonCard = ({ pokemon }) => {
                     display: "flex",
                     flexDirection: "column",
                     margin: "5px",
-                    backgroundColor: "yellow"
                 }}
             >
-                {!imageLoaded && <Skeleton animation="pulse" variant="rounded" width={150} height={150} />}
+                <div style={{ visibility: my ? 'visible' : 'hidden'  }} className={"myPokeomn"} ><span>&#10024;</span> </div>
+                {!imageLoaded && <Skeleton animation="pulse" variant="rounded" width={160} height={150} />}
                 <CardMedia
                     component="img"
                     image={pokemon.img}
@@ -76,6 +74,7 @@ const PokemonCard = ({ pokemon }) => {
                         <p>{pokemon.price}</p>
                     </Box>
                 </CardContent>
+                <span className={"pokemonNumber"}>{pokemon._id}</span>
                 <ModalShop open={openModal} onClose={handleCloseModal} pokemon={pokemon} />
             </Card>
         );

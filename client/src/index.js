@@ -40,7 +40,7 @@ const MyRoot = function() {
     useEffect(() => {
         const token = Cookies.get('token');
         console.log("Index:", userData, "token", token);
-        if (userData == null && (token !== undefined && token != null && token !== "")) {
+        if (refresh || (userData == null && (token !== undefined && token != null && token !== ""))) {
             console.log("call fetch");
             fetchUserById();
         }
