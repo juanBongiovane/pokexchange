@@ -11,10 +11,6 @@ import {BASE_API_URL} from "../../constants/apiRoutes";
 import {useState} from "react";
 import ModalShop from "./ModalShop";
 
-
-
-
-
 const PokemonCard = ({ my, pokemon }) => {
 
     const [openModal, setOpenModal] = useState(false);

@@ -29,13 +29,19 @@ const LoginPage = () => {
             Cookies.set('token', response.data);
             setRefresh(true);
         } catch (err) {
-            alert('Failed to log in');
+            alert('Failed to login');
         }
     };
 
     const signup = ()=>{
         navigate("../signup");
     }
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit(e);
+        }
+    };
 
     return (
         <AppBackground>
@@ -81,6 +87,7 @@ const LoginPage = () => {
                             fullWidth
                             value={formData.password}
                             onChange={handleChange}
+                            onKeyPress={handleKeyPress}
                         />
                     </Grid>
                     <Grid item container justifyContent="flex-end">

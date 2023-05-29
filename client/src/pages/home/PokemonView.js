@@ -43,6 +43,7 @@ const PokemonView = () => {
 
     const handleOpenEdit = () => {
         setOpenModalEdit(true);
+        setSavePokemon({...savePokemon, box: 0});
     }
     const handleOpenSell = () => {
         setOpenModalSell(true);

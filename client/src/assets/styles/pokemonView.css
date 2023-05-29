@@ -65,10 +65,9 @@
 .pokemon-data > div {
     display: flex;
     justify-content: space-between;
-    margin: 15px 0;
+    margin: 15px 0 0 0;
 }
 .pokemon-data > div > img{
-    margin-top: -10px;
     margin-right: 20px;
     margin-left: -5px;
     height: 16px;

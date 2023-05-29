@@ -58,6 +58,8 @@ exports.buyPokemon = async (req, res) => {
         const user = await User.findById(userId);
         const spaceInBoxes = 90 - user.boxes.reduce((count, box) => box.pokemons.length + count, 0);
 
+        const cost = buy.count;
+
         if (user.coin >= (buy.count * pokemon.price) && spaceInBoxes > 0) {
             for (let boxIndex = 0; boxIndex < user.boxes.length; boxIndex++) {
                 const box = user.boxes[boxIndex];
@@ -73,7 +75,7 @@ exports.buyPokemon = async (req, res) => {
                     }
                 }
             }
-            await User.findByIdAndUpdate({ _id: userId }, { coin: user.coin - (buy.count * pokemon.price), boxes: user.boxes });
+            await User.findByIdAndUpdate({ _id: userId }, { coin: (user.coin - (cost*pokemon.price)), boxes: user.boxes });
         }
         res.status(200).json({});
     } catch (err) {
@@ -109,22 +111,30 @@ exports.sellPokemon = async (req, res) => {
     }
 };
 
-exports.savePokemon = async (req, res) =>{
-    try{
-        const pokemon = req.body;
-        console.log(pokemon);
+exports.savePokemon = async (req, res) => {
+    try {
+        const pokemonID = req.body;
         const userId = req.userId;
-        const user = await User.findOne({ 'boxes.pokemons._id': pokemon.id });
-        const box = user.boxes[pokemon.box];
-        const pokemonIndex = box.pokemons.findIndex((poke) => poke._id.equals(pokemon.id));
-        const movedPokemon = box.pokemons[pokemonIndex];
-        box.pokemons.splice(pokemonIndex, 1);
-        await user.save();
-        console.log(user);
-        res.status(200).json({});
-    }catch (err){
-        console.log(err);
-        res.status(500).json({ error: "Error editar el pokemon" });
-    }
-}
+        const user = await User.findOne({ _id: new ObjectId(userId) });
 
+        if (user) {
+            const boxIndex = user.boxes.findIndex(box => box.pokemons.some(pokemon => pokemon._id.toString() === pokemonID.id));
+
+            if (boxIndex !== -1) {
+                const box = user.boxes[boxIndex];
+                const pokemonIndex = box.pokemons.findIndex(pokemon => pokemon._id.toString() === pokemonID.id);
+
+                if (pokemonIndex !== -1) {
+                    box.pokemons[pokemonIndex].name = pokemonID.name
+                    user.boxes[pokemonID.box].pokemons.splice(user.boxes[pokemonID.box].pokemons.length, 0, box.pokemons[pokemonIndex]);
+                    box.pokemons.splice(pokemonIndex, 1);
+                    await user.save();
+                }
+            }
+        }
+        res.status(200).json({});
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Error al editar el Pokémon.' });
+    }
+};

@@ -14,17 +14,23 @@ import '../../assets/styles/trainerSelector.css';
 const TrainerSelector = ({initialValue, onTrainerChange }) => {
 
     const trainers = useContext(TrainerContext);
-
     const [selectedTrainer, setSelectedTrainer] = useState(null);
 
     useEffect(() => {
-        const rand = getRandomIndex(trainers);
-        setSelectedTrainer(rand);
-        onTrainerChange(trainers[rand].idTrainer);
-    }, []);
+        if (initialValue) {
+            const initialTrainerIndex = trainers.findIndex(
+                (trainer) => trainer.idTrainer === initialValue
+            );
+            setSelectedTrainer(initialTrainerIndex);
+            onTrainerChange(initialValue);
+        } else {
+            const rand = getRandomIndex(trainers);
+            setSelectedTrainer(rand);
+            onTrainerChange(trainers[rand].idTrainer);
+        }
+    }, [initialValue, trainers]);
 
     const handleChange = (direction) => {
-        //const newTrainerIndex = getRandomIndex(trainers);
         let newTrainerIndex = selectedTrainer+direction;
         if (newTrainerIndex < 0) newTrainerIndex = trainers.length-1;
         if (newTrainerIndex === trainers.length) newTrainerIndex = 0;
