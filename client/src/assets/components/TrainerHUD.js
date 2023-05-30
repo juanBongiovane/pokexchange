@@ -12,6 +12,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import TrainerSelector from "./TrainerSelector";
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import axios from "axios";
+import AlertMessage from "./AlertMessage";
 
 const style = {
     position: 'absolute',
@@ -33,23 +34,8 @@ const TrainerHUD = () => {
     const trainers = useContext(TrainerContext);
     const navigate = useNavigate();
     const [openModalConfig, setOpenModalConfig] = React.useState(false);
-
-    const logout = () => {
-        if (Cookies.get('token')) {
-            Cookies.remove('token');
-            setUserData(null);
-        }
-        navigate("../login")
-    };
-    const home = () => {
-        navigate("../home")
-    };
-    const handleOpenConfig = () => {
-        setOpenModalConfig(true);
-    }
-    const handleCloseConfig = () => {
-        setOpenModalConfig(false);
-    };
+    const [error, setError] = useState('');
+    const [ok, setOk] = useState('');
 
     const formatFecha = (dateString) => {
         if (!dateString) return '';
@@ -68,6 +54,30 @@ const TrainerHUD = () => {
         newPassword: '',
         trainerAvatar: ''
     });
+    const logout = () => {
+        if (Cookies.get('token')) {
+            Cookies.remove('token');
+            setUserData(null);
+        }
+        navigate("../login")
+    };
+    const home = () => {
+        navigate("../home")
+    };
+    const handleOpenConfig = () => {
+        setOpenModalConfig(true);
+    }
+    const handleCloseConfig = () => {
+        setOpenModalConfig(false);
+        setError('');
+        setOk('');
+        setFormData({ ...formData, password: ''});
+
+    };
+
+
+
+
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -81,7 +91,7 @@ const TrainerHUD = () => {
         e.preventDefault();
         try {
             const response = await axios.post(
-                BASE_API_URL + '/edit',
+                BASE_API_URL + '/editperfil',
                 formData,
                 {
                     headers: {
@@ -91,9 +101,13 @@ const TrainerHUD = () => {
                 }
             ).then(() => {
                 setRefresh(true);
-                handleCloseConfig();
+                setOk('ok');
+                setTimeout(() => {
+                    handleCloseConfig();
+                }, 1000);
             });
         } catch (error) {
+            setError('Error');
             console.error('Error:', error);
         }
     };
@@ -179,6 +193,7 @@ const TrainerHUD = () => {
                             onChange={handleChange}
                         />
                         <TextField
+                            error={!!error}
                             id="outlined-password-input"
                             name="password"
                             label="Contraseña Actual"
@@ -208,6 +223,12 @@ const TrainerHUD = () => {
                             guardar
                         </Button>
                     </FormControl>
+                    {error && (
+                        <AlertMessage mensaje={'Error de contrañsena'} tipo={'error'} />
+                    )}
+                    {ok && (
+                        <AlertMessage mensaje={'Perfil actualizados'} tipo={''} />
+                    )}
                 </Box>
             </Modal>
         </div>

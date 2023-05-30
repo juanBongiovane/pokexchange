@@ -41,7 +41,7 @@ app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// // Rutas de autenticación
+// Rutas de autenticación
  app.use('/api/auth', authRoutes);
 
 // Rutas principales (index)

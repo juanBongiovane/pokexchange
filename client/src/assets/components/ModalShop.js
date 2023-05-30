@@ -1,6 +1,6 @@
 import {Alert, Box, Button, Fade, IconButton, Modal} from "@mui/material";
 import * as React from "react";
-import {pokemonTypeBox, pokemonTypeString} from "../../utils/pokemonType";
+import {pokemonTypeBox} from "../../utils/pokemonType";
 import {BASE_API_URL} from "../../constants/apiRoutes";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
@@ -8,6 +8,7 @@ import {useContext, useState} from "react";
 import {UserContext} from "../../index";
 import axios from "axios";
 import Cookies from "js-cookie";
+import AlertMessage from "./AlertMessage";
 
 const style = {
     position: 'absolute',
@@ -87,10 +88,6 @@ const ModalShop = ({ open, onClose, pokemon }) => {
                                 <AddIcon fontSize="inherit"  />
                             </IconButton>
                         </div>
-                        {userData.coin < (pokemon.price * pokemonCount) ? (
-                        <Alert className={"alert-saldo"} variant="filled" severity="error" >
-                            Saldo ₽ pokedólar insuficiente
-                        </Alert>) : (<></>)}
                         <div className={"modal-buton"}>
                             <Button size="small" color="error" onClick={handleClose}>
                                 cancelar
@@ -105,6 +102,9 @@ const ModalShop = ({ open, onClose, pokemon }) => {
                             </Button>
                         </div>
                     </div>
+                    {userData.coin < (pokemon.price * pokemonCount) ? (
+                        <AlertMessage mensaje={'Saldo ₽ pokedólar insuficiente'} tipo={'error'} />
+                    ) : (<></>)}
                 </Box>
             </Fade>
         </Modal>

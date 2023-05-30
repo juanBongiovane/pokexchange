@@ -1,6 +1,7 @@
 const User = require('../models/Users');
 const Pokedex = require('../models/Pokedex');
 const {ObjectId} = require("mongodb");
+const bcrypt = require("bcrypt");
 
 
 exports.createUser = async (req, res) => {
@@ -139,8 +140,33 @@ exports.savePokemon = async (req, res) => {
 
 exports.editPerfil = async (req, res) => {
     try {
+        const user = req.body;
 
+        if(user.password !== ''){
+            const userDB = await User.findById(req.userId);
+            const isMatch = await userDB.comparePassword(user.password);
+            if (!isMatch) {
+                return res.status(400).send({ error: 'Invalid password' });
+            }
+            const newPassword = await bcrypt.hash(user.newPassword, 10);
 
+            await User.findByIdAndUpdate(req.userId, {
+                name: user.name,
+                email: user.email,
+                birthDate: user.birthDate,
+                password: newPassword,
+                trainerAvatar: user.trainerAvatar
+            });
+            res.status(200).json('contraseña cambiada OK');
+        }else {
+            await User.findByIdAndUpdate(req.userId, {
+                name: user.name,
+                email: user.email,
+                birthDate: user.birthDate,
+                trainerAvatar: user.trainerAvatar
+            });
+            res.status(200).json('save OK');
+        }
 
     }catch (err){
         res.status(500).json({error: 'Error a guardar los cambios'})

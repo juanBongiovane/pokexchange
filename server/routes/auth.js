@@ -22,6 +22,7 @@ router.post('/register', async (req, res) => {
             email,
             password,
             trainerAvatar,
+            coin: 1000,
             boxes: [
                 {
                     name: 'Box 1',
@@ -58,16 +59,12 @@ router.post('/login', async (req, res, next) => {
         if (!isMatch) {
             return res.status(400).send({ error: 'Invalid email or password' });
         }
-
         const token = jwt.sign({ _id: user._id }, config.jwtSecret, {
             expiresIn: '1h'
         });
-
-        console.log(token)
         res.send(token);
 
     } catch (err) {
-        console.log(err)
         res.status(500).send({ error: 'Failed to log in', err });
     }
 });
