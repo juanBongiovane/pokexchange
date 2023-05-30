@@ -49,10 +49,11 @@ function HomePage() {
                             >
                                 <ModifiedGrid container item md={6}>
                                     <Carousel>
-                                        {userData.boxes.map(box => (
+                                        {userData.boxes.map((box, i ) => (
                                             <PokemonBox
                                                 pokemons={box.pokemons}
                                                 name={box.name}
+                                                key={i+1000}
                                             ></PokemonBox>
                                         ))}
                                     </Carousel>

@@ -106,7 +106,6 @@ exports.sellPokemon = async (req, res) => {
         );
         res.status(200).json({});
     } catch (err) {
-        console.log(err);
         res.status(500).json({ error: "Error al vender el pokemon" });
     }
 };
@@ -134,7 +133,16 @@ exports.savePokemon = async (req, res) => {
         }
         res.status(200).json({});
     } catch (err) {
-        console.log(err);
         res.status(500).json({ error: 'Error al editar el Pokémon.' });
     }
 };
+
+exports.editPerfil = async (req, res) => {
+    try {
+
+
+
+    }catch (err){
+        res.status(500).json({error: 'Error a guardar los cambios'})
+    }
+}

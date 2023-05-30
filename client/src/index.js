@@ -20,7 +20,6 @@ const MyRoot = function() {
     const fetchUserById = async () => {
         try {
             const token = Cookies.get('token');
-            console.log(token);
             if (token === undefined || token == null || token === "") {
                 return;
             }
@@ -39,13 +38,10 @@ const MyRoot = function() {
 
     useEffect(() => {
         const token = Cookies.get('token');
-        console.log("Index:", userData, "token", token);
         if (refresh || (userData == null && (token !== undefined && token != null && token !== ""))) {
-            console.log("call fetch");
             fetchUserById();
         }
         setRefresh(false);
-        console.log(refresh)
     }, [refresh]);
 
 

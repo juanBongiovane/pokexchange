@@ -5,11 +5,13 @@ import * as React from "react";
 import '../../assets/styles/TrainerHUD.css';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import SettingsIcon from '@mui/icons-material/Settings';
-import {Box, Button, IconButton, MenuItem, Modal, TextField} from "@mui/material";
+import {Box, Button, FormControl, IconButton, MenuItem, Modal, TextField} from "@mui/material";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home';
 import TrainerSelector from "./TrainerSelector";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import axios from "axios";
 
 const style = {
     position: 'absolute',
@@ -26,7 +28,7 @@ const style = {
 
 
 const TrainerHUD = () => {
-
+    const [userData, _, setRefresh] = useContext(UserContext);
     const [user, setUserData] = useContext(UserContext);
     const trainers = useContext(TrainerContext);
     const navigate = useNavigate();
@@ -49,16 +51,51 @@ const TrainerHUD = () => {
         setOpenModalConfig(false);
     };
 
+    const formatFecha = (dateString) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = `${date.getMonth() + 1}`.padStart(2, '0');
+        const day = `${date.getDate()}`.padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
     const [formData, setFormData] = useState({
         name: user.name,
-        birthDate: user.birthDate,
+        birthDate: formatFecha(user.birthDate),
         email: user.email,
-        password: user.password,
+        password: '',
+        newPassword: '',
         trainerAvatar: ''
     });
 
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
     const handleTrainerChange = (trainerName) => {
         setFormData({ ...formData, trainerAvatar: trainerName });
+    };
+
+    const handleSubmitPerfil = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(
+                BASE_API_URL + '/edit',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${Cookies.get('token')}`,
+                    },
+                }
+            ).then(() => {
+                setRefresh(true);
+                handleCloseConfig();
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -107,9 +144,70 @@ const TrainerHUD = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style} className={"modal-sell"} >
-                    <h3>Modal configuracion</h3>
-
-                    <TrainerSelector initialValue={user.trainerAvatar} onTrainerChange={handleTrainerChange} />
+                    <h3>Editar perfil</h3>
+                    <FormControl variant="standard">
+                        <TextField
+                            id="name"
+                            name="name"
+                            label="¿Cómo te llamas?"
+                            variant="outlined"
+                            autoComplete="current-password"
+                            defaultValue={user.name}
+                            sx={{ marginBottom: 3 }}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            label="Fecha de nacimiento"
+                            name="birthDate"
+                            type="date"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            variant="outlined"
+                            sx={{ marginBottom: 3 }}
+                            defaultValue={formatFecha(user.birthDate)}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            label="correo"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            variant="outlined"
+                            defaultValue={user.email}
+                            sx={{ marginBottom: 3 }}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            id="outlined-password-input"
+                            name="password"
+                            label="Contraseña Actual"
+                            type="password"
+                            autoComplete="current-password"
+                            variant="outlined"
+                            sx={{ marginBottom: 3 }}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            id="outlined-newPassword-input"
+                            name="newPassword"
+                            label="Nueva Contraseña"
+                            type="password"
+                            autoComplete="current-password"
+                            variant="outlined"
+                            sx={{ marginBottom: 3 }}
+                            onChange={handleChange}
+                        />
+                        <TrainerSelector initialValue={user.trainerAvatar} onTrainerChange={handleTrainerChange} />
+                        <Button
+                            variant="contained"
+                            endIcon={<SaveOutlinedIcon />}
+                            sx={{ margin: 2 }}
+                            onClick={handleSubmitPerfil}
+                        >
+                            guardar
+                        </Button>
+                    </FormControl>
                 </Box>
             </Modal>
         </div>

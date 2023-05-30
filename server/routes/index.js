@@ -22,4 +22,6 @@ router.post('/sellpokemon', authenticateToken, userController.sellPokemon);
 
 router.post('/savepokemon', authenticateToken, userController.savePokemon);
 
+router.post('/editperfil', authenticateToken, userController.editPerfil);
+
 module.exports = router;
