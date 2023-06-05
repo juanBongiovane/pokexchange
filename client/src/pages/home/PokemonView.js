@@ -4,7 +4,16 @@ import {getStages} from "../../utils/pokemonStages";
 import '../../assets/styles/pokemonView.css'
 import {toUpperCase} from "../../utils/toUpperCase";
 import {BASE_API_URL} from "../../constants/apiRoutes";
-import {Box, Button, MenuItem, Modal, SpeedDial, SpeedDialAction, SpeedDialIcon, TextField} from "@mui/material";
+import {
+    Box,
+    Button,
+    MenuItem,
+    Modal,
+    SpeedDial,
+    SpeedDialAction,
+    SpeedDialIcon,
+    TextField
+} from "@mui/material";
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -12,7 +21,9 @@ import {pokemonTypeBox, pokemonTypeString} from "../../utils/pokemonType";
 import axios from "axios";
 import {UserContext} from "../../index";
 import Cookies from "js-cookie";
-import {runInContext as currencies} from "lodash";
+import DoDisturbIcon from '@mui/icons-material/DoDisturb';
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import ModalExchange from "../../assets/components/ModalExchange";
 
 const style = {
     position: 'absolute',
@@ -29,34 +40,47 @@ const style = {
 
 
 const PokemonView = () => {
-
-
     const [userData, _, setRefresh] = useContext(UserContext);
-
     const { selectedPokemon, handlePokemonSelected } = useContext(DataContext);
 
     const token = Cookies.get('token');
-
     const [openModalEdit, setOpenModalEdit] = React.useState(false);
     const [openModalSell, setOpenModalSell] = React.useState(false);
-    const [savePokemon, setSavePokemon] = useState({name:"", id:"", box:0});
+    const [openModalExchange, setOpenModalExchange] = React.useState(false);
+
+    const exchangeState = useState([]);
+
+    const [savePokemon, setSavePokemon] = useState({ name: "", id: "", box: 0 });
 
     const handleOpenEdit = () => {
         setOpenModalEdit(true);
-        setSavePokemon({...savePokemon, box: 0});
-    }
+        setSavePokemon({ ...savePokemon, box: 0 });
+    };
+
     const handleOpenSell = () => {
         setOpenModalSell(true);
-    }
-    const handleClose = () => {
+    };
+
+    const handleOpenExchange = () => {
+        setOpenModalExchange(true);
+    };
+
+    const handleCloseSell = () => {
         setOpenModalSell(false);
+    };
+
+    const handleCloseEdit = () => {
         setOpenModalEdit(false);
-    }
+    };
+
+    const handleCloseExchange = () => {
+        setOpenModalExchange(false);
+    };
 
     const actions = [
         { icon: <CurrencyExchangeIcon onClick={handleOpenSell} />, name: 'vender' },
-        { icon: <ShuffleIcon />, name: 'intercambiar' },
-        { icon: <EditNoteIcon onClick={handleOpenEdit}/>, name: 'editar pokemon' },
+        { icon: <EditNoteIcon onClick={handleOpenEdit} />, name: 'editar pokemon' },
+        { icon: <ShuffleIcon onClick={handleOpenExchange} />, name: 'intercambiar' },
     ];
 
     const fetchSellPokemon = async () => {
@@ -73,7 +97,7 @@ const PokemonView = () => {
                 }
             ).then(() => {
                 setRefresh(true);
-                handleClose();
+                handleCloseSell();
                 handlePokemonSelected("");
             });
         } catch (error) {
@@ -94,7 +118,7 @@ const PokemonView = () => {
                 }
             ).then(() => {
                 setRefresh(true);
-                handleClose();
+                handleCloseEdit();
                 handlePokemonSelected("");
             });
         } catch (error) {
@@ -106,6 +130,8 @@ const PokemonView = () => {
             setSavePokemon({ ...savePokemon, name: selectedPokemon.name, id: selectedPokemon._id })
         }
     }, [selectedPokemon]);
+
+
 
     return (
         <div className="pokemon-view">
@@ -153,9 +179,14 @@ const PokemonView = () => {
                             ))}
                         </div>
                     </div>
+
+                    <ModalExchange open={openModalExchange} handleClose={handleCloseExchange} exchangeState={exchangeState}/>
+
+
+
                     <Modal
                         open={openModalSell}
-                        onClose={handleClose}
+                        onClose={handleCloseSell}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
@@ -176,7 +207,13 @@ const PokemonView = () => {
                                 ))}
                             </div>
                             <div className={"modal-button"}>
-                                <Button size="small" color="error" onClick={handleClose}>
+                                <Button
+                                    color="error"
+                                    size="small"
+                                    variant="contained"
+                                    endIcon={<DoDisturbIcon />}
+                                    onClick={handleCloseSell}
+                                >
                                     cancelar
                                 </Button>
                                 <Button onClick={fetchSellPokemon}>
@@ -190,9 +227,11 @@ const PokemonView = () => {
                             </div>
                         </Box>
                     </Modal>
+
+
                     <Modal
                         open={openModalEdit}
-                        onClose={handleClose}
+                        onClose={handleCloseEdit}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
@@ -237,10 +276,23 @@ const PokemonView = () => {
 
 
                             <div className={"modal-button-edit"}>
-                                <Button size="small" color="error" onClick={handleClose}>
+                                <Button
+                                    color="error"
+                                    size="small"
+                                    variant="contained"
+                                    endIcon={<DoDisturbIcon />}
+                                    sx={{ margin: 2 }}
+                                    onClick={handleCloseEdit}
+                                >
                                     cancelar
                                 </Button>
-                                <Button size="small" color="success" onClick={fetchSavePokemon}>
+                                <Button
+                                    size="small"
+                                    variant="contained"
+                                    endIcon={<SaveOutlinedIcon />}
+                                    sx={{ margin: 2 }}
+                                    onClick={fetchSavePokemon}
+                                >
                                     guardar
                                 </Button>
                             </div>
@@ -255,7 +307,6 @@ const PokemonView = () => {
                     />
                     <span className="text-view">Seleccione un pokemon de la caja</span>
                 </div>
-
                 )}
         </div>
     );

@@ -8,6 +8,7 @@ import PokemonView from "./PokemonView";
 import {Box, CircularProgress, createTheme, Grid, styled, ThemeProvider} from "@mui/material";
 import {UserContext} from "../../index";
 import ShopLink from "../../assets/components/ShopLink";
+import FriendList from "../../assets/components/FriendList";
 
 const ModifiedGrid = styled(Grid)(({theme}) => ({
     justifyContent: "flex-start",
@@ -34,10 +35,12 @@ function HomePage() {
                             position: 'absolute',
                             right: '30px',
                             top: '30px',
+                            height: '30%'
                         }}
                     >
                         <TrainerHUD></TrainerHUD>
                         <ShopLink></ShopLink>
+                        <FriendList></FriendList>
                     </Box>
                     <DataContext.Provider value={{ selectedPokemon, handlePokemonSelected }}>
                             <Grid container

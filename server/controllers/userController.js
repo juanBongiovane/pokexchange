@@ -39,8 +39,8 @@ exports.getUserByName = async (req, res) => {
 exports.getUserById = async (req, res) => {
     try {
         const userId = req.userId;
-        const user = await User.findById(userId)
-            .populate('friends')
+        const user = await User.findById(userId, {password:0})
+            .populate('friends', {_id:1, name:1, trainerAvatar:1 })
             .populate('boxes.pokemons.species');
         if (!user) {
             return res.status(404).json({ error: 'User not found' });

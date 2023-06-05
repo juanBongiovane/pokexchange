@@ -17,6 +17,10 @@ const MyRoot = function() {
 
     const [userData, setUserData] = useState(null);
     const [refresh, setRefresh] = useState(false);
+
+
+
+
     const fetchUserById = async () => {
         try {
             const token = Cookies.get('token');
@@ -48,9 +52,7 @@ const MyRoot = function() {
     return (
             <UserContext.Provider value={[userData, setUserData, setRefresh] }>
                 <TrainerContext.Provider value={data.trainers}>
-                    <React.StrictMode>
                         <AppRoutes />
-                    </React.StrictMode>
                 </TrainerContext.Provider>
             </UserContext.Provider>
     );

@@ -29,8 +29,8 @@ const style = {
 
 
 const TrainerHUD = () => {
-    const [userData, _, setRefresh] = useContext(UserContext);
-    const [user, setUserData] = useContext(UserContext);
+
+    const [user, setUserData,setRefresh ] = useContext(UserContext);
     const trainers = useContext(TrainerContext);
     const navigate = useNavigate();
     const [openModalConfig, setOpenModalConfig] = React.useState(false);
@@ -72,12 +72,7 @@ const TrainerHUD = () => {
         setError('');
         setOk('');
         setFormData({ ...formData, password: ''});
-
     };
-
-
-
-
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
