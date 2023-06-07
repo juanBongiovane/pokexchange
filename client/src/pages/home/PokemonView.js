@@ -78,7 +78,7 @@ const PokemonView = () => {
     };
 
     const actions = [
-        { icon: <CurrencyExchangeIcon onClick={handleOpenSell} />, name: 'vender' },
+        { icon: <CurrencyExchangeIcon />, name: 'vender', onClick: handleOpenSell },
         { icon: <EditNoteIcon onClick={handleOpenEdit} />, name: 'editar pokemon' },
         { icon: <ShuffleIcon onClick={handleOpenExchange} />, name: 'intercambiar' },
     ];
@@ -148,6 +148,7 @@ const PokemonView = () => {
                                     key={action.name}
                                     icon={action.icon}
                                     tooltipTitle={action.name}
+                                    {onClick}
                                 />
                             ))}
                         </SpeedDial>

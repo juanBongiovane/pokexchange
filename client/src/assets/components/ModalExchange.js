@@ -102,6 +102,12 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                         handleCloseExchange();
                         break;
                     }
+                    case 'addFriend':{
+                        console.log("te quieren anadir" , messageData.body);
+                    }
+                    case 'addFriendClose':{
+                        console.log("anadir amigo cancelado");
+                    }
                 }
             };
         }
@@ -142,6 +148,16 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                 })
         );
     };
+
+    const handleAddFriend = (friend) =>{
+        window.exchangeSocket.send(
+            JSON.stringify(
+                {
+                    state: 'addFriend',
+                    body: friend
+                })
+        );
+    }
 
 
 
@@ -189,16 +205,16 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                                                 {e.name}
                                             </span>
 
-                                            <IconButton color="secondary" aria-label="anadir a amigos" >
+                                            <IconButton color="secondary" aria-label="anadir a amigos" onClick={() => handleAddFriend(e)}>
                                                 <PersonAddIcon />
-                                            </IconButton>
+                                            </IconButton >
 
                                             <IconButton color="primary" aria-label="Confirmar Intercambio" onClick={() => handleExchange(e)}>
                                                 <PublishedWithChangesIcon />
                                             </IconButton>
                                         </div>
                                     )})
-                                    : (<div className="trainer-exchange">no hay pokemons</div>)
+                                    : (<div className="trainer-exchange">no hay pokemons para intercambiar</div>)
                             }
                         </div>
                     </div>
@@ -271,7 +287,6 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                                     >
                                         Confirmar
                                     </Button>)}
-
                                 </div>
                             </>
                         )}

@@ -137,7 +137,27 @@ router.processExchangeListMessages = (ws, exchangeClients, message) => {
                 }
 
             });
-
+            break
+        }
+        case "addFriend": {
+            console.log(message.body);
+            Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body.pokemonExchange._id).map(cli =>{
+                cli.send(JSON.stringify({
+                    state: "requestAddFriend",
+                    body: {
+                        name: ws.exchangeData.name,
+                        pokemonExchange: ws.exchangeData.pokemonExchange
+                    }
+                }))
+            })
+            break
+        }
+        case "addFriendClose":{
+            Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body._id).map(cli =>{
+                cli.send(JSON.stringify({
+                    state: "addFriendClose",
+                }))
+            })
             break
         }
     }
