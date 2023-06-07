@@ -74,3 +74,114 @@
     border-radius: 3px;
     box-shadow: 1px 0px 4px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
 }
+
+.img-exchange-intercambio{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+
+.img-exchange-modal {
+    padding-right: 55px;
+    margin: 23px 0 20px 0;
+}
+
+.gif3-exchange-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 28%;
+    left: 58%;
+    animation-name: rotateClockwise;
+    animation-duration: 10s;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    transform-origin: -33px 50%;
+}
+
+@keyframes rotateClockwise {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.gif3-exchange-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 28%;
+    left: 17%;
+    animation-duration: 10s;
+    animation-name: rotateCounterClockwise;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    transform-origin: 120px 50%;
+}
+
+@keyframes rotateCounterClockwise {
+    0% {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.gif3-exchange-left img {
+    animation-duration: 10s;
+    animation-name: rotarEnContraDerecha;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+
+.gif3-exchange-right img {
+    animation-duration: 10s;
+    animation-name: rotarEnContra;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes rotarEnContra {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotarEnContraDerecha {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.texta-pokemon-exchange{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.modal-exchange{
+width: 420px;
+}

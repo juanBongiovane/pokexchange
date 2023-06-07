@@ -51,11 +51,8 @@ router.processFriendListMessages = (ws, connectedClients, message) => {
 router.processExchangeListMessages = (ws, exchangeClients, message) => {
     switch (message.state){
         case "connected":{
-            console.log("Conexion Intercambio", message);
             if (exchangeClients[ws.userId])
                 exchangeClients[ws.userId].exchangeData = {pokemonExchange: message.pokemonExchange, name: message.name, trainerAvatar: message.trainerAvatar};
-
-            console.log("All trade clients", Object.values(exchangeClients));
 
             ws.send(
                 JSON.stringify(
@@ -76,8 +73,6 @@ router.processExchangeListMessages = (ws, exchangeClients, message) => {
         }
         case "exchange" :{
 
-            console.log("Click Intercambio", message, exchangeClients);
-
             Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body.pokemonExchange._id).map(cli =>{
                 cli.send(JSON.stringify({
                     state: "requestExchange",
@@ -87,9 +82,61 @@ router.processExchangeListMessages = (ws, exchangeClients, message) => {
                     }
                 }))
             })
+            break
+        }
+        case "exchangeClose":{
+            Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body._id).map(cli =>{
+                cli.send(JSON.stringify({
+                    state: "exchangeClose",
+                }))
+            })
+            break
+        }
+        case  "OKExchange":{
+            console.log("ok", message.body)
+            const pokemonA = ws.exchangeData.pokemonExchange._id;
+            const userAId = ws.userId;
 
+            const pokemonB = message.body._id;
+            const userBId =  Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === pokemonB)[0].userId;
 
+            Promise.all([User.findById(userAId), User.findById(userBId)]).then(([userA, userB]) => {
+                if (userA && userB) {
+                    console.log("Encontrados usuarios");
+                    const boxIndexA = userA.boxes.findIndex(box => box.pokemons.some(pokemon => pokemon._id.toString() ===  pokemonA));
+                    const boxIndexB = userB.boxes.findIndex(box => box.pokemons.some(pokemon => pokemon._id.toString() ===  pokemonB));
 
+                    if (boxIndexA !== -1 && boxIndexB !== -1) {
+                        const boxA = userA.boxes[boxIndexA];
+                        const boxB = userB.boxes[boxIndexB];
+
+                        const pokemonIndexA = boxA.pokemons.findIndex(pokemon => pokemon._id.toString() === pokemonA);
+                        const pokemonIndexB = boxB.pokemons.findIndex(pokemon => pokemon._id.toString() === pokemonB);
+
+                        if (pokemonIndexA !== -1 && pokemonIndexB !== -1) {
+                            const pokemonA =  boxA.pokemons[pokemonIndexA];
+                            const pokemonB = boxB.pokemons[pokemonIndexB];
+
+                            userA.boxes[boxIndexA].pokemons.splice(pokemonIndexA, 1, pokemonB);
+                            userB.boxes[boxIndexB].pokemons.splice(pokemonIndexB, 1, pokemonA);
+
+                            Promise.all([userA.save(), userB.save()]).then(() => {
+                                console.log("Intercambio guardado");
+                                Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body._id).map(cli =>{
+                                    cli.send(JSON.stringify({
+                                        state: "OKExchange",
+                                    }))
+                                });
+
+                                ws.send(JSON.stringify({
+                                    state: "OKExchange",
+                                }));
+                            })
+                        }
+                    }
+                }
+
+            });
 
             break
         }

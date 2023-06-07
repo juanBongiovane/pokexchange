@@ -31,14 +31,20 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
 
     const [offeredPokemon, setOfferedPokemon] = useState(null);
 
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const [buttonOK, setbuttonOK] = useState(true);
 
     const handleCloseExchange = () => {
         handleClose();
+        setbuttonOK(true);
         if (window.exchangeSocket) {
             console.log("Cerrando websocket exchange")
             window.exchangeSocket.close();
         }
     };
+
+
 
     useEffect(() => {
         if (open) {
@@ -82,6 +88,20 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                         setOfferedPokemon(messageData.body);
                         break
                     }
+                    case 'exchangeClose':{
+                        setOfferedPokemon(null);
+                        setModalOpen(false);
+                        break
+                    }
+                    case 'OKExchange':{
+                        setOfferedPokemon(null);
+                        setModalOpen(false);
+                        setbuttonOK(true);
+                        setRefresh(true);
+                        handlePokemonSelected(null);
+                        handleCloseExchange();
+                        break;
+                    }
                 }
             };
         }
@@ -96,9 +116,32 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                         body: clickedExchange
             })
         );
-        console.log( "pokemon enviado", clickedExchange);
         setOfferedPokemon(clickedExchange);
+        setbuttonOK(false);
     }
+
+    const handleCloseOKExchange = () => {
+        window.exchangeSocket.send(
+            JSON.stringify(
+                {
+                    state: 'exchangeClose',
+                    body: offeredPokemon.pokemonExchange,
+                })
+        );
+        setbuttonOK(true);
+        setOfferedPokemon(null);
+        setModalOpen(false);
+    };
+
+    const handleOKExchange = () => {
+        window.exchangeSocket.send(
+            JSON.stringify(
+                {
+                    state: 'OKExchange',
+                    body: offeredPokemon.pokemonExchange,
+                })
+        );
+    };
 
 
 
@@ -110,7 +153,7 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style} className={"modal-exchange"} >
+                <Box sx={style} >
                     <h3>Intercambio</h3>
                     <div className="container-exchange">
                         <img
@@ -146,11 +189,11 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                                                 {e.name}
                                             </span>
 
-                                            <IconButton color="secondary" aria-label="anadir a amigos" onClick={() => handleExchange(e)}>
+                                            <IconButton color="secondary" aria-label="anadir a amigos" >
                                                 <PersonAddIcon />
                                             </IconButton>
 
-                                            <IconButton color="primary" aria-label="Confirmar Intercambio">
+                                            <IconButton color="primary" aria-label="Confirmar Intercambio" onClick={() => handleExchange(e)}>
                                                 <PublishedWithChangesIcon />
                                             </IconButton>
                                         </div>
@@ -184,41 +227,52 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                     {offeredPokemon === null ? ( <h1>Intercambio</h1> )
                         : (
                             <>
-                                <h5>Conformar intercambio de un {selectedPokemon.name} por un {offeredPokemon.pokemonExchange.name}</h5>
-                                <Button
-                                    color="error"
-                                    size="small"
-                                    variant="contained"
-                                    endIcon={<DoDisturbIcon />}
-                                    sx={{ margin: 2 }}
-                                    onClick={handleCloseExchange}
-                                >
-                                    cancelar
-                                </Button>
-                                <img
-                                    className="gif2-exchange"
-                                    src={selectedPokemon.species.imgGif}
-                                    alt={selectedPokemon.species.name}
-                                />
-                                <img className="img-exchange"
-                                     src={`${BASE_API_URL}/public/images/generic/exchange.png`}
-                                     alt="Imagen intercambio"
-                                />
-                                <img
-                                    className="gif2-exchange"
-                                    src={offeredPokemon.pokemonExchange.species.imgGif}
-                                    alt={offeredPokemon.pokemonExchange.species.name}
-                                />
-                                <Button
-                                    color="success"
-                                    size="small"
-                                    variant="contained"
-                                    endIcon={<TaskAltIcon />}
-                                    sx={{ margin: 2 }}
-                                    onClick={handleCloseExchange}
-                                >
-                                    Confirmar
-                                </Button>
+                                <h5>Conformar intercambio</h5>
+
+                                <div className="img-exchange-modal">
+                                    <div className="gif3-exchange-left ">
+                                        <img
+                                            src={selectedPokemon.species.imgGif}
+                                            alt={selectedPokemon.species.name}
+                                        />
+                                    </div>
+
+                                    <img className="img-exchange-intercambio"
+                                         src={`${BASE_API_URL}/public/images/generic/exchange.png`}
+                                         alt="Imagen intercambio"
+                                    />
+                                    <div className="gif3-exchange-right" >
+                                        <img
+                                            src={offeredPokemon.pokemonExchange.species.imgGif}
+                                            alt={offeredPokemon.pokemonExchange.species.name}
+                                        />
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <Button
+                                        color="error"
+                                        size="small"
+                                        variant="contained"
+                                        endIcon={<DoDisturbIcon />}
+                                        sx={{ margin: 2 }}
+                                        onClick={handleCloseOKExchange}
+                                    >
+                                        cancelar
+                                    </Button>
+                                    {!buttonOK ? <></> : (
+                                        <Button
+                                        color="success"
+                                        size="small"
+                                        variant="contained"
+                                        endIcon={<TaskAltIcon />}
+                                        sx={{ margin: 2 }}
+                                        onClick={handleOKExchange}
+                                    >
+                                        Confirmar
+                                    </Button>)}
+
+                                </div>
                             </>
                         )}
                 </Box>
