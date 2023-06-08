@@ -32,7 +32,7 @@ router.processFriendListMessages = (ws, connectedClients, message) => {
           User.findById(ws.userId, { "friends": 1 })
               .populate("friends", { "_id": 1 })
               .then(userData => {
-                  const allFriendsIds = userData.friends.map(f => f._id.toString());
+                  const allFriendsIds = userData.friends.map(f => f.friend._id.toString());
                   const connectedFriends = Object.keys(connectedClients)
                       .filter(friendId => {
                           const isOnline = allFriendsIds.includes(friendId);
@@ -45,14 +45,72 @@ router.processFriendListMessages = (ws, connectedClients, message) => {
               });
           break
       }
+      case "addFriendOK":{
+          const userAId = ws.userId;
+          const userBId = message.body;
+
+          console.log (userAId, userBId )
+
+          Promise.all([User.findById(userAId), User.findById(userBId)]).then(async ([userA, userB]) => {
+
+              const friendAIndex = userA.friends.findIndex(ele => ele.friend._id.toString() === userBId);
+              const friendBIndex = userB.friends.findIndex(ele => ele.friend._id.toString() === userAId);
+
+              console.log(friendAIndex,friendBIndex )
+
+              if (friendAIndex !== -1) {
+                  userA.friends[friendAIndex].state = '';
+                  userA.coin += 100;
+                  await userA.save();
+              }
+
+              if (friendBIndex !== -1) {
+                  userB.friends[friendBIndex].state = '';
+                  userB.coin += 100;
+                  await userB.save();
+              }
+
+              connectedClients[userBId].send(JSON.stringify({
+                  state: "addFriendOK"
+              }));
+              connectedClients[userAId].send(JSON.stringify({
+                  state: "addFriendOK"
+              }));
+          });
+          break;
+      }
+      case "NOTaddFriend":{
+          const userAId = ws.userId;
+          const userBId = message.body;
+
+          Promise.all([User.findById(userAId), User.findById(userBId)]).then(async ([userA, userB]) => {
+              const friendAIndex = userA.friends.findIndex(ele => ele.friend._id.toString() === userBId);
+              const friendBIndex = userB.friends.findIndex(ele => ele.friend._id.toString() === userAId);
+
+              if (friendAIndex !== -1) {
+                  userA.friends.splice(friendAIndex, 1);
+                  await userA.save();
+              }
+
+              if (friendBIndex !== -1) {
+                  userB.friends.splice(friendBIndex, 1);
+                  await userB.save();
+              }
+
+              connectedClients[userBId].send(JSON.stringify({
+                  state: "addFriendOK"
+              }));
+          });
+      }
   }
 }
 
 router.processExchangeListMessages = (ws, exchangeClients, message) => {
     switch (message.state){
         case "connected":{
-            if (exchangeClients[ws.userId])
-                exchangeClients[ws.userId].exchangeData = {pokemonExchange: message.pokemonExchange, name: message.name, trainerAvatar: message.trainerAvatar};
+            if (exchangeClients[ws.userId]){
+                exchangeClients[ws.userId].exchangeData = {pokemonExchange: message.pokemonExchange, _id: message._id, name: message.name, trainerAvatar: message.trainerAvatar};
+            }
 
             ws.send(
                 JSON.stringify(
@@ -100,11 +158,11 @@ router.processExchangeListMessages = (ws, exchangeClients, message) => {
             const pokemonB = message.body._id;
             const userBId =  Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === pokemonB)[0].userId;
 
-            Promise.all([User.findById(userAId), User.findById(userBId)]).then(([userA, userB]) => {
+            Promise.all([User.findById(userAId), User.findById(userBId)]).then(async ([userA, userB]) => {
                 if (userA && userB) {
                     console.log("Encontrados usuarios");
-                    const boxIndexA = userA.boxes.findIndex(box => box.pokemons.some(pokemon => pokemon._id.toString() ===  pokemonA));
-                    const boxIndexB = userB.boxes.findIndex(box => box.pokemons.some(pokemon => pokemon._id.toString() ===  pokemonB));
+                    const boxIndexA = userA.boxes.findIndex(box => box.pokemons.some(pokemon => pokemon._id.toString() === pokemonA));
+                    const boxIndexB = userB.boxes.findIndex(box => box.pokemons.some(pokemon => pokemon._id.toString() === pokemonB));
 
                     if (boxIndexA !== -1 && boxIndexB !== -1) {
                         const boxA = userA.boxes[boxIndexA];
@@ -114,19 +172,25 @@ router.processExchangeListMessages = (ws, exchangeClients, message) => {
                         const pokemonIndexB = boxB.pokemons.findIndex(pokemon => pokemon._id.toString() === pokemonB);
 
                         if (pokemonIndexA !== -1 && pokemonIndexB !== -1) {
-                            const pokemonA =  boxA.pokemons[pokemonIndexA];
+                            const pokemonA = boxA.pokemons[pokemonIndexA];
                             const pokemonB = boxB.pokemons[pokemonIndexB];
+
+                            userA.coin += 100;
+                            userB.coin += 100;
+
+                            await userA.save();
+                            await userB.save();
 
                             userA.boxes[boxIndexA].pokemons.splice(pokemonIndexA, 1, pokemonB);
                             userB.boxes[boxIndexB].pokemons.splice(pokemonIndexB, 1, pokemonA);
 
                             Promise.all([userA.save(), userB.save()]).then(() => {
                                 console.log("Intercambio guardado");
-                                Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body._id).map(cli =>{
-                                    cli.send(JSON.stringify({
-                                        state: "OKExchange",
-                                    }))
-                                });
+
+                                exchangeClients[userBId].send(JSON.stringify({
+                                    state: "OKExchange",
+                                }))
+
 
                                 ws.send(JSON.stringify({
                                     state: "OKExchange",
@@ -140,25 +204,23 @@ router.processExchangeListMessages = (ws, exchangeClients, message) => {
             break
         }
         case "addFriend": {
-            console.log(message.body);
-            Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body.pokemonExchange._id).map(cli =>{
-                cli.send(JSON.stringify({
-                    state: "requestAddFriend",
-                    body: {
-                        name: ws.exchangeData.name,
-                        pokemonExchange: ws.exchangeData.pokemonExchange
-                    }
-                }))
+
+            const userAId = ws.userId;
+            const userBId =  Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body.pokemonExchange._id)[0].userId;
+
+            Promise.all([User.findById(userAId), User.findById(userBId)]).then(async ([userA, userB]) => {
+                await User.findByIdAndUpdate({_id:userAId}, {$push: {friends: { friend: userB, state:"ENVIADO"} } });
+                await User.findByIdAndUpdate({_id:userBId}, {$push: {friends: { friend: userA, state:"PENDIENTE"} } });
+
+
+                exchangeClients[userBId].send(JSON.stringify({
+                    state: "requestAddFriend"
+                }));
+                exchangeClients[userAId].send(JSON.stringify({
+                    state: "requestAddFriend"
+                }));
             })
-            break
-        }
-        case "addFriendClose":{
-            Object.values(exchangeClients).filter(e => e.exchangeData.pokemonExchange._id === message.body._id).map(cli =>{
-                cli.send(JSON.stringify({
-                    state: "addFriendClose",
-                }))
-            })
-            break
+            break;
         }
     }
 }

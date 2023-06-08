@@ -60,6 +60,7 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                         pokemonExchange: selectedPokemon,
                         trainerAvatar: userData.trainerAvatar,
                         name: userData.name,
+                        _id: userData._id
                     })
                 );
             };
@@ -102,11 +103,9 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                         handleCloseExchange();
                         break;
                     }
-                    case 'addFriend':{
-                        console.log("te quieren anadir" , messageData.body);
-                    }
-                    case 'addFriendClose':{
-                        console.log("anadir amigo cancelado");
+                    case 'requestAddFriend':{
+                        console.log("te quieren anadir");
+                        setRefresh(true);
                     }
                 }
             };
@@ -160,7 +159,6 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
     }
 
 
-
     return(
         <>
             <Modal
@@ -187,7 +185,6 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                             {
                                 exchangeList.length > 0 ?
                                     exchangeList.map((e, i) => {
-                                        console.log(e.pokemonExchange._id.toString());
                                         return (
                                         <div className="trainer-exchange" key={e.pokemonExchange._id.toString()}>
                                             <img
@@ -198,14 +195,19 @@ const ModalExchange = ({ open, handleClose, exchangeState }) => {
                                             <div
                                                 className="trainer-image-exchange"
                                                 style={{
-                                                    backgroundImage: `url("${BASE_API_URL}/public/images/trainer/${trainers[e.trainerAvatar].name}.png")`,
+                                                    backgroundImage: `url("${BASE_API_URL}/public/images/trainer/${trainers[e.trainerAvatar-1].name}.png")`,
                                                 }}
                                             ></div>
                                             <span className="hubText">
                                                 {e.name}
                                             </span>
 
-                                            <IconButton color="secondary" aria-label="anadir a amigos" onClick={() => handleAddFriend(e)}>
+
+                                            <IconButton color="secondary"
+                                                        aria-label="anadir a amigos"
+                                                        onClick={() => handleAddFriend(e)}
+                                                        disabled={userData.friends.map(f => f.friend._id).includes(e._id)}
+                                            >
                                                 <PersonAddIcon />
                                             </IconButton >
 

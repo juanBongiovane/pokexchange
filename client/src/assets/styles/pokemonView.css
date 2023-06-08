@@ -138,3 +138,7 @@
 .MuiMenu-root ul{
     background-color: white;
 }
+
+.nav-lateral{
+    margin: 15px;
+}

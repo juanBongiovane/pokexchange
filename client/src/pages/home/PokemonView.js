@@ -79,8 +79,8 @@ const PokemonView = () => {
 
     const actions = [
         { icon: <CurrencyExchangeIcon />, name: 'vender', onClick: handleOpenSell },
-        { icon: <EditNoteIcon onClick={handleOpenEdit} />, name: 'editar pokemon' },
-        { icon: <ShuffleIcon onClick={handleOpenExchange} />, name: 'intercambiar' },
+        { icon: <EditNoteIcon />, name: 'editar pokemon', onClick:handleOpenEdit },
+        { icon: <ShuffleIcon/>, name: 'intercambiar', onClick:handleOpenExchange },
     ];
 
     const fetchSellPokemon = async () => {
@@ -148,7 +148,7 @@ const PokemonView = () => {
                                     key={action.name}
                                     icon={action.icon}
                                     tooltipTitle={action.name}
-                                    {onClick}
+                                    onClick={action.onClick}
                                 />
                             ))}
                         </SpeedDial>

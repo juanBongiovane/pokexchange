@@ -9,9 +9,10 @@ import {Box, CircularProgress, createTheme, Grid, styled, ThemeProvider} from "@
 import {UserContext} from "../../index";
 import ShopLink from "../../assets/components/ShopLink";
 import FriendList from "../../assets/components/FriendList";
+import Chat from "../../assets/components/Chat";
 
 const ModifiedGrid = styled(Grid)(({theme}) => ({
-    justifyContent: "flex-start",
+    justifyContent: "center",
     [theme.breakpoints.down('md')]: {
         justifyContent: "center",
         marginTop: "20px"
@@ -29,19 +30,6 @@ function HomePage() {
         <AppBackground>
             {userData ? (
                 <>
-                    <Box
-                        sx={{
-                            zIndex: 1000,
-                            position: 'absolute',
-                            right: '30px',
-                            top: '30px',
-                            height: '30%'
-                        }}
-                    >
-                        <TrainerHUD></TrainerHUD>
-                        <ShopLink></ShopLink>
-                        <FriendList></FriendList>
-                    </Box>
                     <DataContext.Provider value={{ selectedPokemon, handlePokemonSelected }}>
                             <Grid container
                                   direction="row"
@@ -49,6 +37,7 @@ function HomePage() {
                                   alignItems="center"
                                   rowSpacing={1}
                                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                                  minHeight='100vh'
                             >
                                 <ModifiedGrid container item md={6}>
                                     <Carousel>
@@ -66,6 +55,12 @@ function HomePage() {
                                 </ModifiedGrid>
                             </Grid>
                     </DataContext.Provider>
+                    <Box className='nav-lateral'>
+                        <TrainerHUD></TrainerHUD>
+                        <ShopLink></ShopLink>
+                        <FriendList></FriendList>
+                        <Chat></Chat>
+                    </Box>
                 </>
             ) : (
             <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>

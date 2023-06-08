@@ -59,7 +59,9 @@ const TrainerHUD = () => {
             Cookies.remove('token');
             setUserData(null);
         }
+        window.closeFriendSocket();
         navigate("../login")
+
     };
     const home = () => {
         navigate("../home")

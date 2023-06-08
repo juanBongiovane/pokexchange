@@ -9,7 +9,7 @@ function AppBackground({ children }) {
                    sx={{ minHeight: '100vh', padding: 0}}
                    className="no-padding-container"
         >
-            <Box sx={{ bgcolor: '#cfe8fc', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Box sx={{ bgcolor: '#cfe8fc', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'self-start' }}>
                 {children}
             </Box>
         </Container>

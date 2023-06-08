@@ -29,8 +29,11 @@ const userSchema = new Schema({
         default: 0
     },
     friends: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        friend:{
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        state: String
     }],
     lastLogin: {
         type: Date,

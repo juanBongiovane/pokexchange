@@ -58,6 +58,7 @@ wss.on('connection', function connection(ws, req) {
 
     ws.on('message', function incoming(message) {
         const parsedMessage = JSON.parse(message);
+        console.log(parsedMessage);
         switch (req.url) {
             case "/friendlist": {processFriendListMessages(ws, connectedClients, parsedMessage); break}
             case "/exchangelist":{processExchangeListMessages(ws, exchangeClients, parsedMessage); break}
@@ -75,7 +76,7 @@ wss.on('connection', function connection(ws, req) {
             User.findById(ws.userId, {"friends": 1})
                 .populate("friends", {"_id": 1})
                 .then(userData => {
-                    const allFriendsIds = userData.friends.map(f => f._id.toString());
+                    const allFriendsIds = userData.friends.map(f => f.friend._id.toString());
                     Object.keys(connectedClients)
                         .filter(friendId => allFriendsIds.includes(friendId))
                         .forEach(friendId => connectedClients[friendId].send(JSON.stringify({

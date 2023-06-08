@@ -33,6 +33,7 @@ const MyRoot = function() {
                 }
             });
             if (response.data) {
+                console.log("Actualizando datos de usuario: ", response.data);
                 setUserData(response.data);
             }
         } catch (error) {
