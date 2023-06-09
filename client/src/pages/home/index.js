@@ -13,16 +13,22 @@ import Chat from "../../assets/components/Chat";
 
 const ModifiedGrid = styled(Grid)(({theme}) => ({
     justifyContent: "center",
-    [theme.breakpoints.down('md')]: {
+    minWidth: "500px",
+    [theme.breakpoints.down('xxl')]: {
         justifyContent: "center",
         marginTop: "20px"
     }
 }));
 
 export const DataContext = createContext(null);
+
+export const ChatContext = createContext(null);
 function HomePage() {
     const [userData, _] = useContext(UserContext);
     const [selectedPokemon, setSelectedPokemon] = useState(null);
+
+    const [messages, setMessages] = useState([]);
+
     const handlePokemonSelected = (item) => {
         setSelectedPokemon(item);
     };
@@ -39,6 +45,7 @@ function HomePage() {
                                   columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                                   minHeight='100vh'
                             >
+
                                 <ModifiedGrid container item md={6}>
                                     <Carousel>
                                         {userData.boxes.map((box, i ) => (
@@ -55,12 +62,14 @@ function HomePage() {
                                 </ModifiedGrid>
                             </Grid>
                     </DataContext.Provider>
-                    <Box className='nav-lateral'>
-                        <TrainerHUD></TrainerHUD>
-                        <ShopLink></ShopLink>
-                        <FriendList></FriendList>
-                        <Chat></Chat>
-                    </Box>
+                    <ChatContext.Provider value={[messages, setMessages]}>
+                        <Box className='nav-lateral'>
+                            <TrainerHUD></TrainerHUD>
+                            <ShopLink></ShopLink>
+                            <FriendList></FriendList>
+                            <Chat></Chat>
+                        </Box>
+                    </ChatContext.Provider>
                 </>
             ) : (
             <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>

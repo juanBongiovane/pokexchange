@@ -21,8 +21,6 @@ const Pokedex = require("../models/Pokedex");
 //
 // getPokemons();
 
-
-
 exports.createPokemon = async (req, res) => {
     try {
         const newPokemon = new Pokedex(req.body);

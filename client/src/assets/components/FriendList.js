@@ -9,19 +9,18 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import {ChatContext} from "../../pages/home";
 
 
 const FriendList = ()=>{
 
     const [user, setUserData, setRefresh] = useContext(UserContext);
     const trainers = useContext(TrainerContext);
-
     const [friendList, setFriendList] = useState([]);
-    console.log(friendList);
     const [loading, setLoading] = useState(true);
     const [otherTab, setOtherTab] = useState(false);
-
     const [value, setValue] = React.useState(0);
+    const [messages, setMessage] = useContext(ChatContext)
 
     useEffect(() => {
         setFriendList(user.friends.map(f => ({...(f.friend), state: f.state, online: false})));
@@ -37,22 +36,20 @@ const FriendList = ()=>{
         };
 
         window.resendConnected = ((socket) => () => {
-            console.log("Sending connected");
-            socket.send(JSON.stringify({
-                state: "connected"
-            }));
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    state: "connected"
+                }));
+            }
         })(socket);
 
         socket.onmessage = function (event) {
             const messageData = JSON.parse(event.data);
-            console.log("recibido: ", messageData);
             switch (messageData.state){
                 case "connectionOK": {
-                    console.log("Conexion existosa");
                     break;
                 }
                 case "friendList": {
-                    console.log("Recibida lista amigos", messageData);
                     setLoading(false);
                     setFriendList((prevState) => {
                         return  prevState.map(f => ({
@@ -63,24 +60,26 @@ const FriendList = ()=>{
                     break;
                 }
                 case "connectedFriend": {
-                    console.log("New conected friend", messageData.body)
-
                     setFriendList((prevState) => {
                         return prevState.map(f => (f._id === messageData.body ? {...f, online: true} : f));
                     });
                     break;
                 }
                 case "disconnectedFriend": {
-                    console.log("New conected friend", messageData.body)
                     setFriendList((prevState) => {
                         return prevState.map(f => (f._id === messageData.body ? {...f, online: false} : f));
                     });
                     break;
                 }
                 case 'addFriendOK':{
-                    console.log("anadir amigo ");
                     setRefresh(true);
+                    break;
                 }
+                case 'chatMessage':{
+                    console.log(messageData);
+                    setMessage((prevValue) => [...prevValue, messageData.body]);
+                }
+
             }
         };
 
@@ -90,6 +89,20 @@ const FriendList = ()=>{
                     {
                         state: 'addFriendOK',
                         body: friendId
+                    })
+            );
+        })(socket);
+
+        window.chat = ((socket) => (message)=>{
+            console.log(message);
+            socket.send(
+                JSON.stringify(
+                    {
+                        state: 'chatMessage',
+                        body: {
+                            name:user.name,
+                            message: message
+                        }
                     })
             );
         })(socket);
@@ -105,7 +118,7 @@ const FriendList = ()=>{
         })(socket);
 
         window.closeFriendSocket = ((socket) => () => {
-            socket.close();
+            socket.close(3001);
         })(socket);
 
         socket.onclose =  function () {

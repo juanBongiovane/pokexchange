@@ -22,13 +22,7 @@ router.post('/register', async (req, res) => {
             email,
             password,
             trainerAvatar,
-            coin: 1000,
-            boxes: [
-                {
-                    name: 'Box 1',
-                    pokemons: []
-                }
-            ]
+            coin: 10000
         };
         const user = await User.create(newUser);
         const token = jwt.sign({ _id: user._id }, config.jwtSecret, {

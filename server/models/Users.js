@@ -2,6 +2,27 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
+const pokemonBox = new Schema({
+    name: {
+        type: String,
+
+    },
+    level: {
+        type: String,
+    },
+    species: {
+        type: Number,
+        ref: 'Pokedex',
+    }
+});
+
+const boxSchema = new Schema({
+    name: {
+        type: String,
+    },
+    pokemons: [pokemonBox]
+});
+
 const userSchema = new Schema({
     name: {
         type: String,
@@ -39,25 +60,10 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    boxes: [{
-        name: {
-            type: String,
-            default: "Box 1"
-        },
-        pokemons: [{
-            name: {
-                type: String,
-
-            },
-            level: {
-                type: String,
-            },
-            species: {
-                type: Number,
-                ref: 'Pokedex',
-            }
-        }]
-    }]
+    boxes: {
+        type: [boxSchema],
+        default: [{name: "Box 1", pokemons: []}, {name: "Box 2", pokemons: []}, {name: "Box 3", pokemons: []}]
+    }
 });
 
 userSchema.pre('save', async function (next) {

@@ -47,7 +47,8 @@ const SignUp = () => {
                 backgroundColor: '#fff',
                 minWidth: '300px',
                 maxWidth: '100%',
-                boxShadow: 3
+                boxShadow: 3,
+                margin: 'auto'
             }}>
                 <div className="signUp-form">
                     <Typography

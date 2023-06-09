@@ -101,6 +101,16 @@ router.processFriendListMessages = (ws, connectedClients, message) => {
                   state: "addFriendOK"
               }));
           });
+          break;
+      }
+      case "chatMessage": {
+          Object.values(connectedClients).forEach(client => {
+              client.send(JSON.stringify({
+                  state: "chatMessage",
+                  body: message.body
+              }));
+          });
+          break;
       }
   }
 }
