@@ -7,6 +7,7 @@
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:server": "node server/app.js",
     "start:client": "cd client && npm start",
+    "build": "cd client && npm run build",
     "vercel-build": "npm run build"
   },
   "keywords": [],
@@ -27,7 +28,7 @@
     "express-ws": "^5.0.2",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.0",
-    "mongodb": "^5.5.0",
+    "mongodb": "<versión_compatible_deseada>",
     "mongoose": "^7.1.1",
     "react-scripts": "^5.0.1",
     "server": "^1.0.38",
