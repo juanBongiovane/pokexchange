@@ -6,7 +6,8 @@
   "scripts": {
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start:server": "node server/app.js",
-    "start:client": "cd client && npm start"
+    "start:client": "cd client && npm start",
+    "vercel-build": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.5.0",
     "mongoose": "^7.1.1",
+    "react-scripts": "^5.0.1",
     "server": "^1.0.38",
     "ws": "^8.13.0"
   }
