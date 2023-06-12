@@ -1,0 +1,37 @@
+.MuiPaper-root{
+    background-color: rgba(255, 255, 255, 0)!important
+}
+
+
+.carousel-container{
+    position: relative;
+    width: 400px;
+    margin: 40px auto;
+    background: #1976d2;
+    padding: 21px 50px 30px 50px;
+    border-radius: 10px;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
+}
+
+
+.carousel {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.carousel > div:first-child {
+    margin: 10px;
+}
+
+.carousel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, #1976d2 0%, rgba(255,255,255,0) 6%, rgba(255,255,255,0) 94%, #1976d2 100%);
+    pointer-events: none;
+    z-index: 2;
+}

@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 15px;
+    padding: 22px;
+    background: white;
+    border-radius: 10px;
+}
+
+.pokemon-wrapper {
+    width: 40px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
+
+}
+
+.pokemon-wrapper img {
+    width: 100%;
+    height: 100%;
+}
+
+.text-box{
+    display: flex;
+    padding-bottom: 15px;
+    color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 900;
+    justify-content: center;
+}

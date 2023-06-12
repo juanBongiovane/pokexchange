@@ -1,0 +1,194 @@
+.friend-container{
+    display: flex;
+    flex-direction: column;
+    background: white;
+    margin-top: 8px;
+    border-radius: 7px;
+    max-height: 40vh;
+    overflow-y: auto;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+}
+
+
+.friend-box{
+    margin: 7px 10px;
+}
+
+.trainer-name {
+    width: 74px
+}
+
+.friendPending{
+    position: absolute;
+    background-color: #c5c1bc63;
+    width: 230px;
+    height: 65px;
+    border-radius: 4px;
+}
+
+.trainer-name p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #343434;
+    font-family: 'Press Start 2P', cursive;
+}
+.offline {
+    width: 10px;
+}
+.img-exchange {
+    width: 50px;
+    height: 50px;
+    margin: 0 20px;
+}
+
+.gif-exchange {
+    width: 80px;
+    height: 80px;
+    margin: 0 20px;
+}
+.gif2-exchange{
+    width: 50px;
+    height: 50px;
+    margin: 0 0 0 10px;
+}
+.trainer-image-exchange{
+    width: 41px;
+    height: 43px;
+    background-size: 200px 200px;
+    background-position: 0 -5px;
+    margin: 0 10px;
+}
+
+.container-exchange{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.box-exchange {
+    /*width: 300px;*/
+    height: 200px;
+    border-radius: 5px;
+    box-shadow: inset 1px 0px 4px 0px rgb(89 89 89 / 20%), 0px 1px 1px 0px rgb(111 111 111 / 14%), 0px 1px 3px 0px rgb(89 87 87 / 12%);
+    margin: 0 20px;
+    overflow: auto;
+}
+.trainer-exchange{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 6px 6px;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 1px 0px 4px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12);
+}
+
+.img-exchange-intercambio{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+
+.img-exchange-modal {
+    padding-right: 55px;
+    margin: 23px 0 20px 0;
+}
+
+.gif3-exchange-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 28%;
+    left: 58%;
+    animation-name: rotateClockwise;
+    animation-duration: 10s;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    transform-origin: -33px 50%;
+}
+
+@keyframes rotateClockwise {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.gif3-exchange-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 28%;
+    left: 17%;
+    animation-duration: 10s;
+    animation-name: rotateCounterClockwise;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    transform-origin: 120px 50%;
+}
+
+@keyframes rotateCounterClockwise {
+    0% {
+        transform:rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.gif3-exchange-left img {
+    animation-duration: 10s;
+    animation-name: rotarEnContraDerecha;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+
+.gif3-exchange-right img {
+    animation-duration: 10s;
+    animation-name: rotarEnContra;
+    animation-iteration-count: initial;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes rotarEnContra {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotarEnContraDerecha {
+    0% {
+        transform: rotate(360deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+.texta-pokemon-exchange{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.modal-exchange{
+width: 420px;
+}

@@ -1,24 +1,62 @@
-import React from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
-import {
-    RouterProvider,
-} from "react-router-dom";
-import routes from "./router";
+import AppRoutes from '../src/router/index';
+import Cookies from "js-cookie";
+import axios from "axios";
+import {BASE_API_URL} from "./constants/apiRoutes";
+
+
+export const TrainerContext = createContext(null);
+export const UserContext = createContext(null);
+const data = {
+    trainers: require('./assets/data/trainer.json'),
+};
+
+const MyRoot = function() {
+
+    const [userData, setUserData] = useState(null);
+    const [refresh, setRefresh] = useState(false);
 
 
 
 
+    const fetchUserById = async () => {
+        try {
+            const token = Cookies.get('token');
+            if (token === undefined || token == null || token === "") {
+                return;
+            }
+            const response = await axios.get(BASE_API_URL + '/user', {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+            if (response.data) {
+                console.log("Actualizando datos de usuario: ", response.data);
+                setUserData(response.data);
+            }
+        } catch (error) {
+            console.log('Error fetching user by ID:', error);
+        }
+    };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-      <RouterProvider router={routes} />
-  </React.StrictMode>
-);
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (refresh || (userData == null && (token !== undefined && token != null && token !== ""))) {
+            fetchUserById();
+        }
+        setRefresh(false);
+    }, [refresh]);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+    return (
+            <UserContext.Provider value={[userData, setUserData, setRefresh] }>
+                <TrainerContext.Provider value={data.trainers}>
+                        <AppRoutes />
+                </TrainerContext.Provider>
+            </UserContext.Provider>
+    );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<MyRoot />);

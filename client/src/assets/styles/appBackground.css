@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.error-message{
+    position: absolute;
+    margin-top: 50px;
+    padding: 15px;
+    display: flex;
+    color: aliceblue;
+    background-color: #ff6161;
+    border-radius: 6px;
+    align-items: center;
+}
+.error-message span {
+    padding-left: 10px;
+}
+.ok-message{
+    position: absolute;
+    margin-top: 50px;
+    padding: 15px;
+    display: flex;
+    color: aliceblue;
+    background-color: #38b76e;
+    border-radius: 6px;
+    align-items: center;
+}
+
+.ok-message span {
+    padding-left: 10px;
+}

@@ -1,0 +1,17 @@
+.trainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.trainer-crop {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.trainer-image {
+    width: 65px;
+    height: 65px;
+    background-size: 256px 256px;
+    background-position: 0 0;
+    margin: 0 10px;
+}
